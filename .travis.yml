@@ -1,0 +1,18 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+addons:
+  apt:
+    sources:
+    - mongodb-3.2-precise
+    packages:
+    - mongodb-org-server
+deploy:
+  provider: heroku
+  api_key:
+    secure:     L+z/AzD7l8IQgaXa6shzs3kFpR9CLxxtANvGWvhZC2LJ4xa3ITCgKN1+5gT1yFNL572tKxeYH/WWBzJ73WABaxLASuU8TnUl+lcw+QyJtCXyEO7UmjsCt53uIz8v2I/t8tl/JsndsS07fBz0UiXahnqaPeVvbV+g4KUQCAMfgkt9xEllU4Q8mUfHDftFMa1Ipjd7yfFXHby/SPoZVv0d4evqQStXmRBCkJHFpphfJuYCmM8XVnSBF9TwqO1n927xssyXrd/ltIJuRA94hXBkIrIy616yo7S0XFa5cfELv+YDkOnEOij6kFwy/P6FRJFG9i4rQvH4SaJFXOVWsEIHVDEmgTRjb5Fy8g/XjeS/PzDgQQM63GZ1WFcfy/Rla+E8zdKGn2U4DaNLmG6avwiZIgjgl0S+VXcu4XwXtBLtE/FFuD/scOJuVZwuZ2GohxSh3QyhzWZ/EfwYwlN4G0O+8pPUH9StHus3SkjPH893A+u5dVU3aBTVeFG2BoFBNYvkUIYixio4LhVM4fIc54FSNdVbpAWefEu3d+8MtZWbKw5LRn4kSEwDQmCtk0RcAKBjp0twY6aMI/Iiyct3Uvn5+A9KhFFfpaSKx2gpa4cDZ8f4GIZvLj6OxELVfhVMbadjMAc6i/VZkrPUzGTAT4skfpnZqEItrGg3uui7wz24jhw=
+  app:
+  on:
+    repo: edwinmah/node-lms
+    branch: master
