@@ -1,0 +1,29 @@
+{
+  "name": "node-lms",
+  "version": "1.0.0",
+  "description": "Simple Node LMS",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwinmah/node-lms.git"
+  },
+  "author": "Edwin Mah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edwinmah/node-lms/issues"
+  },
+  "homepage": "https://github.com/edwinmah/node-lms#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.7.0"
+  }
+}
