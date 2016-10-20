@@ -1,6 +1,15 @@
-
+/* General */
 ol, ul {
   padding-left: 0;
+}
+
+/* Layout */
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 .container {
@@ -15,4 +24,30 @@ ol, ul {
 
 .container--max {
   width: 60em;
+}
+
+.container:before,
+.container:after {
+  display: table;
+  content: ' ';
+}
+
+.container:after {
+  clear: both;
+}
+
+@media (min-width: 48em) {
+  .sm-one-third {
+    float: left;
+    padding-left: 1.3889%;
+    padding-right: 1.3889%;
+    width: 33.3333%;
+  }
+
+  .sm-two-thirds {
+    float: left;
+    padding-left: 1.3889%;
+    padding-right: 1.3889%;
+    width: 66.6667%;
+  }
 }
