@@ -56,6 +56,17 @@ $('#course-lessons').on('click', '.lesson__link', function(event) {
   getAndDisplaySingleLesson.call(this);
 });
 
+$('#lesson').on('focus', '[contenteditable="true"]', function() {
+  $(this).data('initialtext', $(this).text());
+  console.log('The content was focused.');
+})
+  .on('blur', '[contenteditable="true"]', function() {
+  if ($(this).data('initialtext') !== $(this).text()) {
+    console.log('The content was changed.');
+    console.log($(this).text());
+  }
+});
+
 
 /***********
  * Get data
@@ -96,8 +107,7 @@ function displayAllLessons(data) {
     var dueDate = data.lessons[index].dueDate;
 
     var output  = '<li class="lesson lesson--item">';
-        output +=   '<h3 class="lesson__title"><a href="" class="lesson__link" data-key="' + index + '">' + title + '</a></h3>';
-        output +=   '<p><strong>Due: </strong>' + dueDate + '</p>';
+        output +=   '<a href="" class="lesson__link" data-key="' + index + '">' + title + '</a>';
         output += '</li>';
 
     $('#lessons-list').append(output);
@@ -106,8 +116,8 @@ function displayAllLessons(data) {
 
 function displaySingleLesson(data) {
   var index      = $(this).data('key');
-  console.log(index);
-  console.log($(this));
+//  console.log(index);
+//  console.log($(this));
 
   var title      = data.lessons[index].title;
   var objective  = data.lessons[index].objective;
@@ -120,7 +130,7 @@ function displaySingleLesson(data) {
       output +=   '<p><strong>Objective: </strong>' + objective + '</p>';
       output +=   '<p><strong>Due: </strong>' + dueDate + '</p>';
       output +=   '<p><strong>Submission: </strong>' + submission + '</p>';
-      output +=   '<p>' + text + '</p>';
+      output +=   '<p contenteditable="true">' + text + '</p>';
       output += '</article>';
 
   $('#lesson').html(output);
@@ -139,7 +149,7 @@ function getAndDisplayAllLessons() {
 }
 
 function getAndDisplaySingleLesson() {
-  getSingleLesson().then(displaySingleLesson.call(this));
+  getSingleLesson().then(displaySingleLesson.call(this, LESSON_DATA));
 }
 
 
