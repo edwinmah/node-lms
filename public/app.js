@@ -75,12 +75,10 @@ function getAllLessons() {
 
 function getSingleLesson(id) {
   return new Promise(function(resolve, reject) {
-    var currentLesson = LESSON_DATA.lessons.filter(function(doc) {
-                          return doc._id === id;
-                        })[0];
-
     setTimeout(function() {
-      resolve(currentLesson);
+      resolve(LESSON_DATA.lessons.filter(function(doc) {
+        return doc._id === id;
+      })[0]);
     }, 100);
   });
 }
@@ -112,16 +110,17 @@ function displayAllLessons(data) {
 }
 
 function editSingleLesson(lesson) {
+  $('#lesson').off();
   $('#lesson').on('focus', '[contenteditable="true"]', function() {
     $(this).data('initialtext', $(this).text());
     console.log('The content was focused.');
   })
     .on('blur', '[contenteditable="true"]', function() {
-    if ($(this).data('initialtext') !== $(this).text()) {
-      console.log('The content was changed.');
-      lesson.text = $(this).text();
-    }
-  });
+      if ($(this).data('initialtext') !== $(this).text()) {
+        console.log('The content was changed.');
+        lesson.text = $(this).text();
+      }
+    });
 }
 
 function displaySingleLesson(lesson) {
