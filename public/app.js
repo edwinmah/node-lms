@@ -42,6 +42,10 @@ var LESSON_DATA = {
   ]
 };
 
+var currentLesson = {
+  index: null
+}
+
 
 /*********
  * Events
@@ -54,17 +58,6 @@ $('#login').submit(function(event) {
 $('#course-lessons').on('click', '.lesson__link', function(event) {
   event.preventDefault();
   getAndDisplaySingleLesson.call(this);
-});
-
-$('#lesson').on('focus', '[contenteditable="true"]', function() {
-  $(this).data('initialtext', $(this).text());
-  console.log('The content was focused.');
-})
-  .on('blur', '[contenteditable="true"]', function() {
-  if ($(this).data('initialtext') !== $(this).text()) {
-    console.log('The content was changed.');
-    console.log($(this).text());
-  }
 });
 
 
@@ -114,26 +107,41 @@ function displayAllLessons(data) {
   }
 }
 
+function editSingleLesson(data) {
+  $('#lesson').on('focus', '[contenteditable="true"]', function() {
+    $(this).data('initialtext', $(this).text());
+    console.log('The content was focused.');
+  })
+    .on('blur', '[contenteditable="true"]', function() {
+    if ($(this).data('initialtext') !== $(this).text()) {
+      console.log('The content was changed.');
+      //console.log($(this).text());
+      data.lessons[currentLesson.index].text = $(this).text();
+    }
+  });
+}
+
 function displaySingleLesson(data) {
-  var index      = $(this).data('key');
+  currentLesson.index = $(this).data('key');
 //  console.log(index);
 //  console.log($(this));
 
-  var title      = data.lessons[index].title;
-  var objective  = data.lessons[index].objective;
-  var dueDate    = data.lessons[index].dueDate;
-  var submission = data.lessons[index].submissionInstructions;
-  var text       = data.lessons[index].text;
+  var title      = data.lessons[currentLesson.index].title;
+  var objective  = data.lessons[currentLesson.index].objective;
+  var dueDate    = data.lessons[currentLesson.index].dueDate;
+  var submission = data.lessons[currentLesson.index].submissionInstructions;
+  var text       = data.lessons[currentLesson.index].text;
 
   var output  = '<article class="lesson lesson--single">';
       output +=   '<h3 class="lesson__title">' + title + '</h3>';
       output +=   '<p><strong>Objective: </strong>' + objective + '</p>';
       output +=   '<p><strong>Due: </strong>' + dueDate + '</p>';
-      output +=   '<p><strong>Submission: </strong>' + submission + '</p>';
       output +=   '<p contenteditable="true">' + text + '</p>';
       output += '</article>';
 
   $('#lesson').html(output);
+
+  console.log(text);
 }
 
 
@@ -149,7 +157,8 @@ function getAndDisplayAllLessons() {
 }
 
 function getAndDisplaySingleLesson() {
-  getSingleLesson().then(displaySingleLesson.call(this, LESSON_DATA));
+  getSingleLesson().then(editSingleLesson)
+                   .then(displaySingleLesson.call(this, LESSON_DATA));
 }
 
 
