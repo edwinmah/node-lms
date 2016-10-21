@@ -11,7 +11,7 @@ var LESSON_DATA = {
       "_id": "1111111",
       "title": "Maecenas faucibus mollis interdum",
       "objective": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "dueDate": "2016-12-01",
+      "dueDate": "2017-04-01",
       "submissionInstructions": "Vestibulum id ligula porta felis euismod semper. Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
       "text": "Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus."
     },
@@ -19,7 +19,7 @@ var LESSON_DATA = {
       "_id": "2222222",
       "title": "Nullam id dolor id nibh ultricies",
       "objective": "Nulla vitae elit libero, a pharetra augue.",
-      "dueDate": "2016-12-08",
+      "dueDate": "2017-04-08",
       "submissionInstructions": "Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.",
       "text": "Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus."
     },
@@ -27,7 +27,7 @@ var LESSON_DATA = {
       "_id": "333333",
       "title": "Morbi leo risus, porta ac consectetur",
       "objective": "Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
-      "dueDate": "2016-12-15",
+      "dueDate": "2017-04-15",
       "submissionInstructions": "Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
       "text": "Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam quis risus eget urna mollis ornare vel eu leo. Etiam porta sem malesuada magna mollis euismod."
     },
@@ -35,16 +35,12 @@ var LESSON_DATA = {
       "_id": "4444444",
       "title": "Nulla vitae elit libero, a pharetra augue",
       "objective": "Praesent commodo cursus magna, vel scelerisque nisl consectetur et.",
-      "dueDate": "2016-12-22",
+      "dueDate": "2017-04-22",
       "submissionInstructions": "Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
       "text": "Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam quis risus eget urna mollis ornare vel eu leo. Nulla vitae elit libero, a pharetra augue."
     }
   ]
 };
-
-var currentLesson = {
-  index: null
-}
 
 
 /*********
@@ -77,13 +73,14 @@ function getAllLessons() {
   });
 }
 
-
 function getSingleLesson(id) {
   return new Promise(function(resolve, reject) {
+    var currentLesson = LESSON_DATA.lessons.filter(function(doc) {
+                          return doc._id === id;
+                        })[0];
+
     setTimeout(function() {
-      resolve(LESSON_DATA.lessons.filter(function(doc) {
-        return doc._id === id;
-      })[0]);
+      resolve(currentLesson);
     }, 100);
   });
 }
@@ -104,7 +101,7 @@ function displayAllLessons(data) {
   for (index in data.lessons) {
     var title   = data.lessons[index].title;
     var dueDate = data.lessons[index].dueDate;
-    var _id = data.lessons[index]._id;
+    var _id     = data.lessons[index]._id;
 
     var output  = '<li class="lesson lesson--item">';
         output +=   '<a href="" class="lesson__link" data-key="' + _id + '">' + title + '</a>';
@@ -114,7 +111,7 @@ function displayAllLessons(data) {
   }
 }
 
-function editSingleLesson(data) {
+function editSingleLesson(lesson) {
   $('#lesson').on('focus', '[contenteditable="true"]', function() {
     $(this).data('initialtext', $(this).text());
     console.log('The content was focused.');
@@ -122,14 +119,12 @@ function editSingleLesson(data) {
     .on('blur', '[contenteditable="true"]', function() {
     if ($(this).data('initialtext') !== $(this).text()) {
       console.log('The content was changed.');
-      //console.log($(this).text());
-      data.lessons[currentLesson.index].text = $(this).text();
+      lesson.text = $(this).text();
     }
   });
 }
 
 function displaySingleLesson(lesson) {
-
   var title      = lesson.title;
   var objective  = lesson.objective;
   var dueDate    = lesson.dueDate;
@@ -144,8 +139,6 @@ function displaySingleLesson(lesson) {
       output += '</article>';
 
   $('#lesson').html(output);
-
-  console.log(text);
 }
 
 
@@ -162,7 +155,7 @@ function getAndDisplayAllLessons() {
 
 function getAndDisplaySingleLesson(key) {
   getSingleLesson(key).then(function(lesson) {
-    editSingleLesson();
+    editSingleLesson(lesson);
     displaySingleLesson(lesson);
   });
 }
