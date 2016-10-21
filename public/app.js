@@ -57,7 +57,8 @@ $('#login').submit(function(event) {
 
 $('#course-lessons').on('click', '.lesson__link', function(event) {
   event.preventDefault();
-  getAndDisplaySingleLesson.call(this);
+  var key = '' + $(this).data('key');
+  getAndDisplaySingleLesson(key);
 });
 
 
@@ -77,9 +78,13 @@ function getAllLessons() {
 }
 
 
-function getSingleLesson() {
+function getSingleLesson(id) {
   return new Promise(function(resolve, reject) {
-    setTimeout(function() { resolve(LESSON_DATA) }, 100);
+    setTimeout(function() {
+      resolve(LESSON_DATA.lessons.filter(function(doc) {
+        return doc._id === id;
+      })[0]);
+    }, 100);
   });
 }
 
@@ -95,12 +100,14 @@ function displayCourseInfo(data) {
 }
 
 function displayAllLessons(data) {
+  $('#lessons-list').html('');
   for (index in data.lessons) {
     var title   = data.lessons[index].title;
     var dueDate = data.lessons[index].dueDate;
+    var _id = data.lessons[index]._id;
 
     var output  = '<li class="lesson lesson--item">';
-        output +=   '<a href="" class="lesson__link" data-key="' + index + '">' + title + '</a>';
+        output +=   '<a href="" class="lesson__link" data-key="' + _id + '">' + title + '</a>';
         output += '</li>';
 
     $('#lessons-list').append(output);
@@ -121,16 +128,13 @@ function editSingleLesson(data) {
   });
 }
 
-function displaySingleLesson(data) {
-  currentLesson.index = $(this).data('key');
-//  console.log(index);
-//  console.log($(this));
+function displaySingleLesson(lesson) {
 
-  var title      = data.lessons[currentLesson.index].title;
-  var objective  = data.lessons[currentLesson.index].objective;
-  var dueDate    = data.lessons[currentLesson.index].dueDate;
-  var submission = data.lessons[currentLesson.index].submissionInstructions;
-  var text       = data.lessons[currentLesson.index].text;
+  var title      = lesson.title;
+  var objective  = lesson.objective;
+  var dueDate    = lesson.dueDate;
+  var submission = lesson.submissionInstructions;
+  var text       = lesson.text;
 
   var output  = '<article class="lesson lesson--single">';
       output +=   '<h3 class="lesson__title">' + title + '</h3>';
@@ -156,9 +160,11 @@ function getAndDisplayAllLessons() {
   getAllLessons().then(displayAllLessons);
 }
 
-function getAndDisplaySingleLesson() {
-  getSingleLesson().then(editSingleLesson)
-                   .then(displaySingleLesson.call(this, LESSON_DATA));
+function getAndDisplaySingleLesson(key) {
+  getSingleLesson(key).then(function(lesson) {
+    editSingleLesson();
+    displaySingleLesson(lesson);
+  });
 }
 
 
