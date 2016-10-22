@@ -1,11 +1,13 @@
-var express  = require('express');
-var morgan   = require('morgan');
-var mongoose = require('mongoose');
-var config   = require('./config');
-var app      = express();
+var express    = require('express');
+var bodyParser = require('body-parser');
+var morgan     = require('morgan');
+var mongoose   = require('mongoose');
+var config     = require('./config');
+var app        = express();
 
 
 app.use(morgan('combined'));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 
@@ -31,17 +33,6 @@ var Lesson = require('./models/lesson');
 /************
  * Endpoints
  ************/
-app.get('/lessons', function(req, res) {
-  Lesson.find(function(err, lessons) {
-    if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
-      });
-    }
-    res.json(lessons);
-  });
-});
-
 app.get('/course', function(req, res) {
   Course.find(function(err, course) {
     if (err) {
@@ -50,6 +41,17 @@ app.get('/course', function(req, res) {
       });
     }
     res.json(course);
+  });
+});
+
+app.get('/lessons', function(req, res) {
+  Lesson.find(function(err, lessons) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.json(lessons);
   });
 });
 

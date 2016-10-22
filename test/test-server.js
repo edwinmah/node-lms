@@ -91,6 +91,23 @@ describe('index page', function() {
       });
   });
 
+  it('should display course on GET', function(done) {
+    chai.request(app)
+      .get('/course')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('array');
+        res.body.should.have.length(1);
+        res.body[0].should.be.a('object');
+        res.body[0].should.have.property('title');
+        res.body[0].title.should.be.a('string');
+        res.body[0].title.should.equal('COMM 603');
+        done();
+      });
+  });
+
   it('should list the lessons on GET', function(done) {
     chai.request(app)
       .get('/lessons')
@@ -107,23 +124,6 @@ describe('index page', function() {
         res.body[1].title.should.equal('Download and install software');
         res.body[2].title.should.equal('About me page');
         res.body[3].title.should.equal('Do something else');
-        done();
-      });
-  });
-
-  it('should display course on GET', function(done) {
-    chai.request(app)
-      .get('/course')
-      .end(function(err, res) {
-        should.equal(err, null);
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('array');
-        res.body.should.have.length(1);
-        res.body[0].should.be.a('object');
-        res.body[0].should.have.property('title');
-        res.body[0].title.should.be.a('string');
-        res.body[0].title.should.equal('COMM 603');
         done();
       });
   });
