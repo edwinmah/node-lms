@@ -28,6 +28,21 @@ var Course = require('./models/course');
 var Lesson = require('./models/lesson');
 
 
+/************
+ * Endpoints
+ ************/
+app.get('/lessons', function(req, res) {
+  Lesson.find(function(err, lessons) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.json(lessons);
+  });
+});
+
+
 if (require.main === module) {
   runServer(function(err) {
     if (err) {

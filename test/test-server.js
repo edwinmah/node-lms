@@ -19,17 +19,6 @@ describe('index page', function() {
    ****************************/
   before(function(done) {
     server.runServer(function() {
-      Course.create(
-        {
-          instructor  : 'Edwin Mah',
-          term        : 'Spring 2017',
-          title       : 'COMM 603',
-          description : 'A class for MFA and MA film students'
-        }
-        function() {
-          done();
-      });
-
       Lesson.create(
         {
           title        : 'Course introduction',
@@ -63,9 +52,6 @@ describe('index page', function() {
   });
 
   after(function(done) {
-    Course.remove(function() {
-      done();
-    });
     Lesson.remove(function() {
       done();
     });
@@ -74,7 +60,7 @@ describe('index page', function() {
   /************
    * Run tests
    ************/
-  it('index page loads', function(done) {
+  it('load the index page', function(done) {
     chai.request(app)
       .get('/')
       .end(function(err, res) {
@@ -84,23 +70,23 @@ describe('index page', function() {
       });
   });
 
-  it('login page loads', function(done) {
+  it('should list lessons on GET', function(done) {
     chai.request(app)
-      .get('/login.html')
+      .get('/lessons')
       .end(function(err, res) {
+        should.equal(err, null);
         res.should.have.status(200);
-        res.should.be.html;
+        res.should.be.json;
+        res.body.should.be.a('array');
+        res.body.should.have.length(4);
+        res.body[0].should.be.a('object');
+        res.body[0].should.have.property('title');
+        res.body[0].title.should.be.a('string');
+        res.body[0].title.should.equal('Course introduction');
+        res.body[1].title.should.equal('Download and install software');
+        res.body[2].title.should.equal('About me page');
+        res.body[3].title.should.equal('Do something else');
         done();
       });
-  });
-
-  it('lesson page loads', function(done) {
-    chai.request(app)
-      .get('/lesson.html')
-      .end(function(err, res) {
-      res.should.have.status(200);
-      res.should.be.html;
-      done();
-    });
   });
 }); // end describe
