@@ -204,7 +204,12 @@ describe('index page', function() {
         res.should.have.status(200);
         chai.request(app)
           .put('/course/' + res.body[0]._id)
-          .send({ instructor: 'Donald Duck' })
+          .send({
+                  instructor  : 'Donald Duck',
+                  term        : 'Spring 2017',
+                  title       : 'COMM 603',
+                  description : 'A class for MFA and MA film students'
+                })
           .end(function(err, res) {
             should.equal(err, null);
             res.should.have.status(200);
@@ -293,7 +298,13 @@ describe('index page', function() {
                 res.body[0].should.have.property('description');
                 res.body[0]._id.should.be.a('string');
                 res.body[0].instructor.should.be.a('string');
+                res.body[0].term.should.be.a('string');
+                res.body[0].title.should.be.a('string');
+                res.body[0].description.should.be.a('string');
                 res.body[0].instructor.should.equal('Donald Duck');
+                res.body[0].term.should.equal('Spring 2017');
+                res.body[0].title.should.equal('COMM 603');
+                res.body[0].description.should.equal('A class for MFA and MA film students');
                 done();
               });
           });
