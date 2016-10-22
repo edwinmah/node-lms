@@ -42,6 +42,17 @@ app.get('/lessons', function(req, res) {
   });
 });
 
+app.get('/course', function(req, res) {
+  Course.find(function(err, course) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.json(course);
+  });
+});
+
 
 if (require.main === module) {
   runServer(function(err) {
