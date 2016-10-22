@@ -240,9 +240,16 @@ describe('index page', function() {
       .end(function(err, res) {
         should.equal(err, null);
         res.should.have.status(200);
+        res.body.should.have.length(5);
         chai.request(app)
           .put('/lessons/' + res.body[0]._id)
-          .send({ title: 'Just another lesson title' })
+          .send({
+                  title        : 'Just another lesson title',
+                  objective    : 'Lesson Objective',
+                  dueDate      : '2017-04-29',
+                  instructions : 'Lesson instructions',
+                  text         : 'Some text for another lesson'
+                })
           .end(function(err, res) {
             should.equal(err, null);
             res.should.have.status(200);
