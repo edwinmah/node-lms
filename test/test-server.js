@@ -195,4 +195,73 @@ describe('index page', function() {
         done();
       });
   });
+
+  it('should edit a course on PUT', function(done) {
+    chai.request(app)
+      .get('/course')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        chai.request(app)
+          .put('/course/' + res.body[0]._id)
+          .send({ instructor: 'Donald Duck' })
+          .end(function(err, res) {
+            should.equal(err, null);
+            res.should.have.status(200);
+            chai.request(app)
+              .get('/course')
+              .end(function(err, res) {
+                should.equal(err, null);
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('array');
+                res.body.should.have.length(2);
+                res.body[0].should.be.a('object');
+                res.body[0].should.have.property('_id');
+                res.body[0].should.have.property('instructor');
+                res.body[0].should.have.property('title');
+                res.body[0]._id.should.be.a('string');
+                res.body[0].instructor.should.be.a('string');
+                res.body[0].instructor.should.equal('Donald Duck');
+                done();
+              });
+          });
+      });
+  });
+
+  it('should edit a lesson on PUT', function(done) {
+    chai.request(app)
+      .get('/lessons')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        chai.request(app)
+          .put('/lessons/' + res.body[0]._id)
+          .send({ title: 'Just another lesson title' })
+          .end(function(err, res) {
+            should.equal(err, null);
+            res.should.have.status(200);
+            chai.request(app)
+              .get('/lessons')
+              .end(function(err, res) {
+                should.equal(err, null);
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('array');
+                res.body.should.have.length(5);
+                res.body[0].should.be.a('object');
+                res.body[0].should.have.property('_id');
+                res.body[0].should.have.property('title');
+                res.body[0].should.have.property('objective');
+                res.body[0].should.have.property('dueDate');
+                res.body[0].should.have.property('instructions');
+                res.body[0].should.have.property('text');
+                res.body[0]._id.should.be.a('string');
+                res.body[0].title.should.be.a('string');
+                res.body[0].title.should.equal('Just another lesson title');
+                done();
+              });
+          });
+      });
+  });
 }); // end describe
