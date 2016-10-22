@@ -264,4 +264,82 @@ describe('index page', function() {
           });
       });
   });
+
+  it('should delete a course on DELETE', function(done) {
+    chai.request(app)
+      .get('/course')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        res.body.should.have.length(2);
+        chai.request(app)
+          .delete('/course/' + res.body[1]._id)
+          .end(function(err, res) {
+            should.equal(err, null);
+            res.should.have.status(200);
+            chai.request(app)
+              .get('/course')
+              .end(function(err, res) {
+                should.equal(err, null);
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('array');
+                res.body.should.have.length(1);
+                res.body[0].should.be.a('object');
+                res.body[0].should.have.property('_id');
+                res.body[0].should.have.property('instructor');
+                res.body[0].should.have.property('term');
+                res.body[0].should.have.property('title');
+                res.body[0].should.have.property('description');
+                res.body[0]._id.should.be.a('string');
+                res.body[0].instructor.should.be.a('string');
+                res.body[0].instructor.should.equal('Donald Duck');
+                done();
+              });
+          });
+      });
+  });
+
+  it('should delete a lesson on DELETE', function(done) {
+    chai.request(app)
+      .get('/lessons')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        res.body.should.have.length(5);
+        chai.request(app)
+          .delete('/lessons/' + res.body[4]._id)
+          .end(function(err, res) {
+            should.equal(err, null);
+            res.should.have.status(200);
+            chai.request(app)
+              .get('/lessons')
+              .end(function(err, res) {
+                should.equal(err, null);
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.be.a('array');
+                res.body.should.have.length(4);
+                res.body[3].should.be.a('object');
+                res.body[3].should.have.property('_id');
+                res.body[3].should.have.property('title');
+                res.body[3].should.have.property('objective');
+                res.body[3].should.have.property('dueDate');
+                res.body[3].should.have.property('instructions');
+                res.body[3].should.have.property('text');
+                res.body[3]._id.should.be.a('string');
+                res.body[3].title.should.be.a('string');
+                res.body[3].objective.should.be.a('string');
+                res.body[3].dueDate.should.be.a('string');
+                res.body[3].instructions.should.be.a('string');
+                res.body[3].text.should.be.a('string');
+                res.body[3].title.should.equal('Do something else');
+                res.body[3].dueDate.should.equal('2017-04-22');
+                res.body[3].instructions.should.equal('');
+                res.body[3].text.should.equal('Click here to edit this text');
+                done();
+              });
+          });
+      });
+  });
 }); // end describe

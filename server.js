@@ -135,6 +135,32 @@ app.put('/lessons/:id', function(req, res) {
   });
 });
 
+app.delete('/course/:id', function(req, res) {
+  var query  = { _id : req.params.id };
+
+  Course.findOneAndRemove(query, function(err, course) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.status(200).json(course);
+  });
+});
+
+app.delete('/lessons/:id', function(req, res) {
+  var query  = { _id : req.params.id };
+
+  Lesson.findOneAndRemove(query, function(err, lessons) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.status(200).json(lessons);
+  });
+});
+
 
 if (require.main === module) {
   runServer(function(err) {
