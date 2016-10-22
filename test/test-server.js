@@ -127,4 +127,72 @@ describe('index page', function() {
         done();
       });
   });
+
+  it('should add a course on POST', function(done) {
+    chai.request(app)
+      .post('/course')
+      .send({
+              instructor  : 'Someone else',
+              term        : 'Summer 2017',
+              title       : 'COMM 553',
+              description : 'A description for COMM 553'
+            })
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('instructor');
+        res.body.should.have.property('term');
+        res.body.should.have.property('title');
+        res.body.should.have.property('description');
+        res.body.should.have.property('_id');
+        res.body.instructor.should.be.a('string');
+        res.body.term.should.be.a('string');
+        res.body.title.should.be.a('string');
+        res.body.description.should.be.a('string');
+        res.body._id.should.be.a('string');
+        res.body.instructor.should.equal('Someone else');
+        res.body.term.should.equal('Summer 2017');
+        res.body.title.should.equal('COMM 553');
+        res.body.description.should.equal('A description for COMM 553');
+        done();
+      });
+  });
+
+  it('should add a lesson on POST', function(done) {
+    chai.request(app)
+      .post('/lessons')
+      .send({
+              title        : 'Another lesson',
+              objective    : 'Lesson Objective',
+              dueDate      : '2017-04-29',
+              instructions : 'Lesson instructions',
+              text         : 'Some text for another lesson'
+            })
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('title');
+        res.body.should.have.property('objective');
+        res.body.should.have.property('dueDate');
+        res.body.should.have.property('instructions');
+        res.body.should.have.property('text');
+        res.body.should.have.property('_id');
+        res.body.title.should.be.a('string');
+        res.body.objective.should.be.a('string');
+        res.body.dueDate.should.be.a('string');
+        res.body.instructions.should.be.a('string');
+        res.body.text.should.be.a('string');
+        res.body._id.should.be.a('string');
+        res.body.title.should.equal('Another lesson');
+        res.body.objective.should.equal('Lesson Objective');
+        res.body.dueDate.should.equal('2017-04-29');
+        res.body.instructions.should.equal('Lesson instructions');
+        res.body.text.should.equal('Some text for another lesson');
+        done();
+      });
+  });
 }); // end describe

@@ -55,6 +55,43 @@ app.get('/lessons', function(req, res) {
   });
 });
 
+app.post('/course', function(req, res) {
+  var query = {
+    instructor  : req.body.instructor,
+    term        : req.body.term,
+    title       : req.body.title,
+    description : req.body.description
+  };
+
+  Course.create(query, function(err, course) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.status(201).json(course);
+  });
+});
+
+app.post('/lessons', function(req, res) {
+  var query = {
+      title        : req.body.title,
+      objective    : req.body.objective,
+      dueDate      : req.body.dueDate,
+      instructions : req.body.instructions,
+      text         : req.body.text
+    };
+
+  Lesson.create(query, function(err, lessons) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Internal Server Error'
+      });
+    }
+    res.status(201).json(lessons);
+  });
+});
+
 
 if (require.main === module) {
   runServer(function(err) {
