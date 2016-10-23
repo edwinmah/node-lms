@@ -1,48 +1,3 @@
-var COURSE = {
-  "instructor": "Edwin Mah",
-  "term": "Spring 2017",
-  "title": "Nullam id dolor id nibh ultricies vehicula ut id elit.",
-  "description": "Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus."
-};
-
-var LESSON_DATA = {
-  "lessons": [
-    {
-      "_id": "1111111",
-      "title": "Maecenas faucibus mollis interdum",
-      "objective": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "dueDate": "2017-04-01",
-      "submissionInstructions": "Vestibulum id ligula porta felis euismod semper. Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.",
-      "text": "Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus."
-    },
-    {
-      "_id": "2222222",
-      "title": "Nullam id dolor id nibh ultricies",
-      "objective": "Nulla vitae elit libero, a pharetra augue.",
-      "dueDate": "2017-04-08",
-      "submissionInstructions": "Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.",
-      "text": "Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus."
-    },
-    {
-      "_id": "333333",
-      "title": "Morbi leo risus, porta ac consectetur",
-      "objective": "Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
-      "dueDate": "2017-04-15",
-      "submissionInstructions": "Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-      "text": "Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam quis risus eget urna mollis ornare vel eu leo. Etiam porta sem malesuada magna mollis euismod."
-    },
-    {
-      "_id": "4444444",
-      "title": "Nulla vitae elit libero, a pharetra augue",
-      "objective": "Praesent commodo cursus magna, vel scelerisque nisl consectetur et.",
-      "dueDate": "2017-04-22",
-      "submissionInstructions": "Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
-      "text": "Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam quis risus eget urna mollis ornare vel eu leo. Nulla vitae elit libero, a pharetra augue."
-    }
-  ]
-};
-
-
 /*********
  * Events
  *********/
@@ -63,43 +18,59 @@ $('#course-lessons').on('click', '.lesson__link', function(event) {
  ***********/
 function getCourseInfo() {
   return new Promise(function(resolve, reject) {
-    setTimeout(function() { resolve(COURSE) }, 100);
+    $.ajax('/course', {
+      type: 'GET',
+      dataType: 'json'
+    })
+      .done(function(course) {
+        resolve(course);
+    });
   });
 }
 
 function getAllLessons() {
   return new Promise(function(resolve, reject) {
-    setTimeout(function() { resolve(LESSON_DATA) }, 100);
+    $.ajax('/lessons', {
+      type: 'GET',
+      dataType: 'json'
+    })
+      .done(function(lessons) {
+        resolve(lessons);
+    });
   });
 }
 
 function getSingleLesson(id) {
   return new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      resolve(LESSON_DATA.lessons.filter(function(doc) {
-        return doc._id === id;
-      })[0]);
-    }, 100);
-  });
+    $.ajax('/lessons', {
+      type: 'GET',
+      dataType: 'json'
+    })
+      .done(function(lessons) {
+        resolve(lessons.filter(function(doc) {
+          return doc._id === id;
+        })[0]);
+      }, 100);
+    });
 }
 
 
 /***************
  * Display data
  **************/
-function displayCourseInfo(data) {
-  $('.course__title').text(data.title);
-  $('.course__desc').text(data.description);
-  $('.course__instructor').text(data.instructor);
-  $('.course__term').text(data.term);
+function displayCourseInfo(course) {
+  $('.course__title').text(course[0].title);
+  $('.course__desc').text(course[0].description);
+  $('.course__instructor').text(course[0].instructor);
+  $('.course__term').text(course[0].term);
 }
 
-function displayAllLessons(data) {
+function displayAllLessons(lessons) {
   $('#lessons-list').html('');
-  for (index in data.lessons) {
-    var title   = data.lessons[index].title;
-    var dueDate = data.lessons[index].dueDate;
-    var _id     = data.lessons[index]._id;
+  for (index in lessons) {
+    var title   = lessons[index].title;
+    var dueDate = lessons[index].dueDate;
+    var _id     = lessons[index]._id;
 
     var output  = '<li class="lesson lesson--item">';
         output +=   '<a href="" class="lesson__link" data-key="' + _id + '">' + title + '</a>';
