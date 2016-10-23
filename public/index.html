@@ -13,10 +13,13 @@
 
     <header role="banner">
       <div class="container container--max">
-        <h1 class="course__title"></h1>
-        <p class="course__desc"></p>
-        <p class="course__instructor"></p>
-        <p class="course__term"></p>
+        <div class="course-info padding-l-r">
+          <h1 class="course__title">Course Title</h1>
+          <p class="course__desc"></p>
+          <p class="course__instructor"></p>
+          <p class="course__term"></p>
+          <button id="newCourse">Add New</button>
+        </div>
       </div>
     </header>
 
@@ -24,6 +27,7 @@
       <div class="container container--max">
         <section id="course-lessons" class="sm-one-third">
           <h2>Course Lessons</h2>
+          <button id="newLesson">Add New</button>
           <ol id="lessons-list"></ol>
         </section>
 

@@ -36,6 +36,11 @@ html {
   clear: both;
 }
 
+.padding-l-r {
+  padding-left: 1.3889%;
+  padding-right: 1.3889%;
+}
+
 @media (min-width: 48em) {
   .sm-one-third {
     float: left;
@@ -50,4 +55,25 @@ html {
     padding-right: 1.3889%;
     width: 66.6667%;
   }
+}
+
+/* Forms */
+label,
+input,
+textarea {
+  display: block;
+  width: 100%;
+}
+
+label {
+  font-weight: 700;
+}
+
+input,
+textarea {
+  margin-bottom: 1.5em;
+}
+
+textarea {
+  height: 8em;
 }
