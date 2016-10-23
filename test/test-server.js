@@ -360,4 +360,164 @@ describe('index page', function() {
           });
       });
   });
+
+  /*****************
+   * Run edge tests
+   *****************/
+  it('POST a course ID that already exists.', function(done) {
+    chai.request(app)
+      .get('/course')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        chai.request(app)
+          .post('/course')
+          .send({ _id: res.body[0]._id })
+          .end(function(err, res) {
+            res.should.have.status(500);
+            res.should.be.json;
+            res.body.should.be.a('object');
+            res.body.message.should.equal('Internal Server Error');
+            done();
+          });
+      });
+  });
+
+  it('POST a lesson ID that exists.', function(done) {
+    chai.request(app)
+      .get('/lessons')
+      .end(function(err, res) {
+        should.equal(err, null);
+        res.should.have.status(200);
+        chai.request(app)
+          .post('/lessons')
+          .send({ _id: res.body[0]._id })
+          .end(function(err, res) {
+            res.should.have.status(500);
+            res.should.be.json;
+            res.body.should.be.a('object');
+            res.body.message.should.equal('Internal Server Error');
+            done();
+          });
+      });
+  });
+
+  it('POST a course without body data.', function(done) {
+    chai.request(app)
+      .post('/course')
+      .send({})
+      .end(function(err, res) {
+        res.should.have.status(500);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.message.should.equal('Internal Server Error');
+        done();
+      });
+  });
+
+  it('POST a lesson without body data.', function(done) {
+    chai.request(app)
+      .post('/lessons')
+      .send({})
+      .end(function(err, res) {
+        res.should.have.status(500);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.message.should.equal('Internal Server Error');
+        done();
+      });
+  });
+
+  it('PUT a course without an ID in the endpoint.', function(done) {
+    chai.request(app)
+      .put('/course')
+      .end(function(err, res) {
+        res.should.have.status(404);
+        res.should.not.be.json;
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('PUT a lesson without an ID in the endpoint.', function(done) {
+    chai.request(app)
+      .put('/lessons')
+      .end(function(err, res) {
+        res.should.have.status(404);
+        res.should.not.be.json;
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('PUT a course with a different ID in the endpoint than the body.', function(done) {
+    chai.request(app)
+      .put('/course/3')
+      .end(function(err, res) {
+        res.should.have.status(500);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.message.should.equal('Internal Server Error');
+        done();
+      });
+  });
+
+  it('PUT a lesson with a different ID in the endpoint than the body.', function(done) {
+    chai.request(app)
+      .put('/lessons/3')
+      .end(function(err, res) {
+        res.should.have.status(500);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.message.should.equal('Internal Server Error');
+        done();
+      });
+  });
+
+  it('DELETE a course ID that doesn\'t exist.', function(done) {
+    chai.request(app)
+      .delete('/course/5')
+      .end(function(err, res) {
+        res.should.have.status(500);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.message.should.equal('Internal Server Error');
+        done();
+      });
+  });
+
+  it('DELETE a lesson ID that doesn\'t exist.', function(done) {
+    chai.request(app)
+      .delete('/lessons/5')
+      .end(function(err, res) {
+        res.should.have.status(500);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.message.should.equal('Internal Server Error');
+        done();
+      });
+  });
+
+  it('DELETE a course without an ID in the endpoint.', function(done) {
+    chai.request(app)
+      .delete('/course')
+      .end(function(err, res) {
+        res.should.have.status(404);
+        res.should.not.be.json;
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('DELETE a lesson without an ID in the endpoint.', function(done) {
+    chai.request(app)
+      .delete('/lessons')
+      .end(function(err, res) {
+        res.should.have.status(404);
+        res.should.not.be.json;
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
 }); // end describe
