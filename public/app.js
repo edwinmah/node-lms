@@ -13,7 +13,7 @@ $('[role="banner"]').on('click', '#newCourse', function(event) {
 
 $('[role="banner"]').on('click', '#submitCourse', function(event) {
   event.preventDefault();
-  addCourse();
+  addCourse.call(this);
 });
 
 $('[role="banner"]').on('click', '#editCourse', function(event) {
@@ -111,19 +111,19 @@ function getSingleLesson(id) {
  * Display data
  **************/
 function displayCourseInfo(course) {
-  var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
-  var editCourse   = '<span id="editCourse" data-key="' + course[0]._id + '">Edit</span>';
-  var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">x</span>';
-  var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
-  var term         = '<p class="course__term">' + course[0].term + '</p>';
-  var description  = '<p class="course__description">' + course[0].description + '</p>';
+    var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
+    var editCourse   = '<span id="editCourse" data-key="' + course[0]._id + '">Edit</span>';
+    var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">x</span>';
+    var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
+    var term         = '<p class="course__term">' + course[0].term + '</p>';
+    var description  = '<p class="course__description">' + course[0].description + '</p>';
 
-  var output  = courseTitle;
-      output += editCourse;
-      output += deleteCourse;
-      output += instructor;
-      output += (course[0].term) ? term : '';
-      output += (course[0].description) ? description : '';
+    var output  = courseTitle;
+        output += editCourse;
+        output += deleteCourse;
+        output += instructor;
+        output += (course[0].term) ? term : '';
+        output += (course[0].description) ? description : '';
 
   $('.course-info').html(output);
 }
@@ -143,20 +143,6 @@ function displayAllLessons(lessons) {
     $('#lessons-list').append(output);
   }
 }
-
-//function editSingleLesson(lesson) {
-//  $('#lesson').off();
-//  $('#lesson').on('focus', '[contenteditable="true"]', function() {
-//    $(this).data('initialtext', $(this).text());
-//    console.log('The content was focused.');
-//  })
-//    .on('blur', '[contenteditable="true"]', function() {
-//      if ($(this).data('initialtext') !== $(this).text()) {
-//        console.log('The content was changed.');
-//        lesson.text = $(this).text();
-//      }
-//    });
-//}
 
 function displaySingleLesson(lesson) {
   var title        = '<h3 class="lesson__title">' + lesson.title + '</h3>';
@@ -183,7 +169,7 @@ function displaySingleLesson(lesson) {
  * Add
  *********/
 function displayCourseForm(id) {
-  var btnId   = ($(this).attr('id') === 'submitCourse') ? 'submitCourse' : 'saveEditCourse';
+  var btnId   = ($(this).attr('id') === 'editCourse') ? 'saveEditCourse' : 'submitCourse';
 
   var output  = '<form id="courseForm">';
       output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" required></label>';
@@ -338,7 +324,6 @@ function getAndDisplayAllLessons() {
 
 function getAndDisplaySingleLesson(key) {
   getSingleLesson(key).then(function(lesson) {
-    //editSingleLesson(lesson);
     displaySingleLesson(lesson);
   });
 }
