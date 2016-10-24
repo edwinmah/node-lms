@@ -165,22 +165,28 @@ function displaySingleLesson(lesson) {
   $('#lesson').html(output);
 }
 
+function displayRecentLesson() {
+  setTimeout(function() {
+    $('#course-lessons').find('.lesson__link').trigger('click');
+  }, 1000);
+}
+
 
 /*********
  * Add
  *********/
 function displayCourseForm(id, course) {
   var edit        = $(this).attr('id') === 'editCourse';
-  var btnId       = (edit) ? 'saveEditCourse' : 'submitCourse';
-  var title       = (edit) ? course[0].title : '';
-  var instructor  = (edit) ? course[0].instructor : '';
-  var term        = (edit) ? course[0].term : '';
+  var btnId       = (edit) ? 'saveEditCourse'      : 'submitCourse';
+  var title       = (edit) ? course[0].title       : '';
+  var instructor  = (edit) ? course[0].instructor  : '';
+  var term        = (edit) ? course[0].term        : '';
   var description = (edit) ? course[0].description : '';
 
   var output  = '<form id="courseForm">';
-      output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" value="' +  title + '" required></label>';
-      output +=   '<label for="instructor">Instructor (required)<input id="instructor" type="text" value="' +  instructor + '" required></label>';
-      output +=   '<label for="term">Term<input id="term" type="text" value="' +  term + '"></label>';
+      output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" value="' + title + '" required></label>';
+      output +=   '<label for="instructor">Instructor (required)<input id="instructor" type="text" value="' + instructor + '" required></label>';
+      output +=   '<label for="term">Term<input id="term" type="text" value="' + term + '"></label>';
       output +=   '<label for="description">Description<input id="description" type="text" value="' +  description + '"></label>';
       output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save</button>';
       output += '</form>';
@@ -218,7 +224,7 @@ function displayLessonForm(id, lesson) {
     var text         = (edit) ? lesson.text         : '';
 
     var output  = '<form id="lessonForm">';
-        output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" value="' +  title + '" required></label>';
+        output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" value="' + title + '" required></label>';
     output +=   '<label for="objective">Objective<input id="objective" type="text" value="' + objective + '"></label>';
     output +=   '<label for="dueDate">Due Date<input id="dueDate" type="text" value="' + dueDate + '"></label>';
         output +=   '<label for="instructions">Instructions</label>';
@@ -248,6 +254,7 @@ function addLesson() {
   })
     .done(function() {
       getAndDisplayAllLessons();
+      displayRecentLesson();
     });
 }
 
@@ -275,7 +282,7 @@ function editCourse(id) {
 }
 
 function editLesson(id) {
-  var editedLesson = {
+  var lesson = {
     title        : $('#title').val(),
     objective    : $('#objective').val(),
     dueDate      : $('#dueDate').val(),
@@ -285,12 +292,13 @@ function editLesson(id) {
 
   $.ajax('/lessons/' + id, {
     type: 'PUT',
-    data: JSON.stringify(editedLesson),
+    data: JSON.stringify(lesson),
     dataType: 'json',
     contentType: 'application/json'
   })
     .done(function() {
       getAndDisplayAllLessons();
+      getAndDisplaySingleLesson(id);
     });
 }
 
