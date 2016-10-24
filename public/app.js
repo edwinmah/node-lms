@@ -8,12 +8,22 @@ $('#login').submit(function(event) {
 
 $('[role="banner"]').on('click', '#newCourse', function(event) {
   event.preventDefault();
-  displayCourseForm();
+  displayCourseForm.call(this);
 });
 
 $('[role="banner"]').on('click', '#submitCourse', function(event) {
   event.preventDefault();
   addCourse();
+});
+
+$('[role="banner"]').on('click', '#editCourse', function(event) {
+  var key = '' + $(this).data('key');
+  displayCourseForm.call(this, key);
+});
+
+$('[role="banner"]').on('click', '#saveEditCourse', function(event) {
+  var key = '' + $(this).data('key');
+  editCourse.call(this, key);
 });
 
 $('[role="banner"]').on('click', '#deleteCourse', function(event) {
@@ -29,12 +39,24 @@ $('#course-lessons').on('click', '.lesson__link', function(event) {
 
 $('#newLesson').on('click', function(event) {
   event.preventDefault();
-  displayLessonForm();
+  displayLessonForm.call(this);
 });
 
 $('main').on('click', '#submitLesson', function(event) {
   event.preventDefault();
   addLesson();
+});
+
+$('main').on('click', '#editLesson', function(event) {
+  event.preventDefault();
+  var key = '' + $(this).data('key');
+  displayLessonForm.call(this, key);
+});
+
+$('main').on('click', '#saveEditLesson', function(event) {
+  event.preventDefault();
+  var key = '' + $(this).data('key');
+  editLesson(key);
 });
 
 $('#course-lessons').on('click', '#deleteLesson', function(event) {
@@ -90,12 +112,14 @@ function getSingleLesson(id) {
  **************/
 function displayCourseInfo(course) {
   var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
-  var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">X</span>';
+  var editCourse   = '<span id="editCourse" data-key="' + course[0]._id + '">Edit</span>';
+  var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">x</span>';
   var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
   var term         = '<p class="course__term">' + course[0].term + '</p>';
   var description  = '<p class="course__description">' + course[0].description + '</p>';
 
   var output  = courseTitle;
+      output += editCourse;
       output += deleteCourse;
       output += instructor;
       output += (course[0].term) ? term : '';
@@ -120,19 +144,19 @@ function displayAllLessons(lessons) {
   }
 }
 
-function editSingleLesson(lesson) {
-  $('#lesson').off();
-  $('#lesson').on('focus', '[contenteditable="true"]', function() {
-    $(this).data('initialtext', $(this).text());
-    console.log('The content was focused.');
-  })
-    .on('blur', '[contenteditable="true"]', function() {
-      if ($(this).data('initialtext') !== $(this).text()) {
-        console.log('The content was changed.');
-        lesson.text = $(this).text();
-      }
-    });
-}
+//function editSingleLesson(lesson) {
+//  $('#lesson').off();
+//  $('#lesson').on('focus', '[contenteditable="true"]', function() {
+//    $(this).data('initialtext', $(this).text());
+//    console.log('The content was focused.');
+//  })
+//    .on('blur', '[contenteditable="true"]', function() {
+//      if ($(this).data('initialtext') !== $(this).text()) {
+//        console.log('The content was changed.');
+//        lesson.text = $(this).text();
+//      }
+//    });
+//}
 
 function displaySingleLesson(lesson) {
   var title        = '<h3 class="lesson__title">' + lesson.title + '</h3>';
@@ -140,6 +164,7 @@ function displaySingleLesson(lesson) {
   var dueDate      = '<p class="lesson__due"><strong>Due: </strong>' + lesson.dueDate + '</p>';
   var instructions = '<p class="lesson__instructions"><strong>Instructions: </strong>' + lesson.instructions + '</p>';
   var text         = '<div class="lesson__text" contenteditable="true">' + lesson.text + '</div>';
+  var editBtn      = '<button id="editLesson" type="submit" data-key="' + lesson._id + '">Edit</button>';
 
   var output  = '<article class="lesson lesson--single">';
       output +=   title;
@@ -147,6 +172,7 @@ function displaySingleLesson(lesson) {
       output +=   (lesson.dueDate !== '') ? dueDate: '';
       output +=   (lesson.instructions !== '') ? instructions : '';
       output +=   text;
+      output +=   editBtn;
       output += '</article>';
 
   $('#lesson').html(output);
@@ -156,13 +182,15 @@ function displaySingleLesson(lesson) {
 /*********
  * Add
  *********/
-function displayCourseForm() {
+function displayCourseForm(id) {
+  var btnId   = ($(this).attr('id') === 'submitCourse') ? 'submitCourse' : 'saveEditCourse';
+
   var output  = '<form id="courseForm">';
       output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" required></label>';
       output +=   '<label for="instructor">Instructor (required)<input id="instructor" type="text" required></label>';
       output +=   '<label for="term">Term<input id="term" type="text"></label>';
       output +=   '<label for="description">Description<input id="description" type="text"></label>';
-      output +=   '<button id="submitCourse" type="submit">Create Course</button>';
+      output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save</button>';
       output += '</form>';
 
   $('.course-info').html(output);
@@ -187,7 +215,14 @@ function addCourse() {
   });
 }
 
-function displayLessonForm() {
+function displayLessonForm(id) {
+  var btnId   = ($(this).attr('id') === 'newLesson') ? 'submitLesson' : 'saveEditLesson';
+
+  if ($(this).attr('id') === 'saveEditLesson') {
+    console.log(id);
+
+  }
+
   var output  = '<form id="lessonForm">';
       output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" required></label>';
       output +=   '<label for="objective">Objective<input id="objective" type="text"></label>';
@@ -196,7 +231,7 @@ function displayLessonForm() {
       output +=   '<textarea id="instructions"></textarea>';
       output +=   '<label for="text">Lesson Text (required)</label>';
       output +=   '<textarea id="text" required></textarea>';
-      output +=   '<button id="submitLesson" type="submit">Save Lesson</button>';
+      output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save Lesson</button>';
       output += '</form>';
 
   $('#lesson').html(output);
@@ -226,7 +261,26 @@ function addLesson() {
 /**************
  * Edit/Update
  **************/
-function editLesson() {
+function editCourse(id) {
+  var course = {
+    title       : $('#courseTitle').val(),
+    instructor  : $('#instructor').val(),
+    term        : $('#term').val(),
+    description : $('#description').val()
+  };
+
+  $.ajax('/course/' + id, {
+    type: 'PUT',
+    data: JSON.stringify(course),
+    dataType: 'json',
+    contentType: 'application/json'
+  })
+    .done(function() {
+      getAndDisplayCourseInfo();
+  });
+}
+
+function editLesson(id) {
   var lesson = {
     title        : $('#title').val(),
     objective    : $('#objective').val(),
@@ -235,7 +289,7 @@ function editLesson() {
     text         : $('#text').val()
   };
 
-  $.ajax('/lessons', {
+  $.ajax('/lessons/' + id, {
     type: 'PUT',
     data: JSON.stringify(lesson),
     dataType: 'json',
@@ -284,7 +338,7 @@ function getAndDisplayAllLessons() {
 
 function getAndDisplaySingleLesson(key) {
   getSingleLesson(key).then(function(lesson) {
-    editSingleLesson(lesson);
+    //editSingleLesson(lesson);
     displaySingleLesson(lesson);
   });
 }
@@ -294,5 +348,6 @@ function getAndDisplaySingleLesson(key) {
  * Call on document ready
  *************************/
 $(function() {
+  getAndDisplayCourseInfo();
   getAndDisplayAllLessons();
 });
