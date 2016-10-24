@@ -8,10 +8,10 @@ $('#login').submit(function(event) {
 
 $('[role="banner"]').on('click', '#newCourse', function(event) {
   event.preventDefault();
-  newCourse();
+  displayCourseForm();
 });
 
-$('[role="banner"]').on('click', '#addCourse', function(event) {
+$('[role="banner"]').on('click', '#submitCourse', function(event) {
   event.preventDefault();
   addCourse();
 });
@@ -29,10 +29,10 @@ $('#course-lessons').on('click', '.lesson__link', function(event) {
 
 $('#newLesson').on('click', function(event) {
   event.preventDefault();
-  newLesson();
+  displayLessonForm();
 });
 
-$('main').on('click', '#addLesson', function(event) {
+$('main').on('click', '#submitLesson', function(event) {
   event.preventDefault();
   addLesson();
 });
@@ -156,13 +156,13 @@ function displaySingleLesson(lesson) {
 /*********
  * Add
  *********/
-function newCourse() {
-  var output  = '<form id="newCourseForm">';
+function displayCourseForm() {
+  var output  = '<form id="courseForm">';
       output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" required></label>';
       output +=   '<label for="instructor">Instructor (required)<input id="instructor" type="text" required></label>';
       output +=   '<label for="term">Term<input id="term" type="text"></label>';
       output +=   '<label for="description">Description<input id="description" type="text"></label>';
-      output +=   '<button id="addCourse" type="submit">Create Course</button>';
+      output +=   '<button id="submitCourse" type="submit">Create Course</button>';
       output += '</form>';
 
   $('.course-info').html(output);
@@ -187,8 +187,8 @@ function addCourse() {
   });
 }
 
-function newLesson() {
-  var output  = '<form id="newLessonForm">';
+function displayLessonForm() {
+  var output  = '<form id="lessonForm">';
       output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" required></label>';
       output +=   '<label for="objective">Objective<input id="objective" type="text"></label>';
       output +=   '<label for="dueDate">Due Date<input id="dueDate" type="text"></label>';
@@ -196,7 +196,7 @@ function newLesson() {
       output +=   '<textarea id="instructions"></textarea>';
       output +=   '<label for="text">Lesson Text (required)</label>';
       output +=   '<textarea id="text" required></textarea>';
-      output +=   '<button id="addLesson" type="submit">Create lesson</button>';
+      output +=   '<button id="submitLesson" type="submit">Save Lesson</button>';
       output += '</form>';
 
   $('#lesson').html(output);
@@ -204,12 +204,12 @@ function newLesson() {
 
 function addLesson() {
   var lesson = {
-      title        : $('#title').val(),
-      objective    : $('#objective').val(),
-      dueDate      : $('#dueDate').val(),
-      instructions : $('#instructions').val(),
-      text         : $('#text').val()
-    };
+    title        : $('#title').val(),
+    objective    : $('#objective').val(),
+    dueDate      : $('#dueDate').val(),
+    instructions : $('#instructions').val(),
+    text         : $('#text').val()
+  };
 
   $.ajax('/lessons', {
     type: 'POST',
@@ -223,6 +223,30 @@ function addLesson() {
 }
 
 
+/**************
+ * Edit/Update
+ **************/
+function editLesson() {
+  var lesson = {
+    title        : $('#title').val(),
+    objective    : $('#objective').val(),
+    dueDate      : $('#dueDate').val(),
+    instructions : $('#instructions').val(),
+    text         : $('#text').val()
+  };
+
+  $.ajax('/lessons', {
+    type: 'PUT',
+    data: JSON.stringify(lesson),
+    dataType: 'json',
+    contentType: 'application/json'
+  })
+    .done(function() {
+      getAndDisplayAllLessons();
+  });
+}
+
+
 /*********
  * Delete
  *********/
@@ -232,7 +256,7 @@ function deleteCourse(id) {
     dataType: 'json'
   })
     .done(function() {
-      newCourse();
+      displayCourseForm();
   });
 }
 
