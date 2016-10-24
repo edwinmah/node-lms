@@ -29,12 +29,6 @@ var runServer = function(callback) {
 var Course = require('./models/course');
 var Lesson = require('./models/lesson');
 
-//runServer(function() {
-//  Course.remove(function() {
-//
-//  });
-//});
-
 
 /************
  * Endpoints
