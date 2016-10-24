@@ -1,2 +1,4 @@
 node_modules/
+data/
+run_mongod
 .DS_Store
