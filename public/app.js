@@ -17,8 +17,9 @@ $('[role="banner"]').on('click', '#submitCourse', function(event) {
 });
 
 $('[role="banner"]').on('click', '#editCourse', function(event) {
+  event.preventDefault();
   var key = '' + $(this).data('key');
-  displayCourseForm.call(this, key);
+  getCourseInfo.call(this, key).then(displayCourseForm.bind(this, key));
 });
 
 $('[role="banner"]').on('click', '#saveEditCourse', function(event) {
@@ -50,7 +51,7 @@ $('main').on('click', '#submitLesson', function(event) {
 $('main').on('click', '#editLesson', function(event) {
   event.preventDefault();
   var key = '' + $(this).data('key');
-  displayLessonForm.call(this, key);
+  getSingleLesson.call(this, key).then(displayLessonForm.bind(this, lesson));
 });
 
 $('main').on('click', '#saveEditLesson', function(event) {
@@ -68,7 +69,7 @@ $('#course-lessons').on('click', '#deleteLesson', function(event) {
 /***********
  * Get data
  ***********/
-function getCourseInfo() {
+function getCourseInfo(id) {
   return new Promise(function(resolve, reject) {
     $.ajax('/course', {
       type: 'GET',
@@ -76,7 +77,7 @@ function getCourseInfo() {
     })
       .done(function(course) {
         resolve(course);
-    });
+      });
   });
 }
 
@@ -88,7 +89,7 @@ function getAllLessons() {
     })
       .done(function(lessons) {
         resolve(lessons);
-    });
+      });
   });
 }
 
@@ -103,7 +104,7 @@ function getSingleLesson(id) {
           return doc._id === id;
         })[0]);
       }, 100);
-    });
+  });
 }
 
 
@@ -154,8 +155,8 @@ function displaySingleLesson(lesson) {
 
   var output  = '<article class="lesson lesson--single">';
       output +=   title;
-      output +=   (lesson.objective !== '') ? objective: '';
-      output +=   (lesson.dueDate !== '') ? dueDate: '';
+      output +=   (lesson.objective    !== '') ? objective    : '';
+      output +=   (lesson.dueDate      !== '') ? dueDate      : '';
       output +=   (lesson.instructions !== '') ? instructions : '';
       output +=   text;
       output +=   editBtn;
@@ -168,14 +169,19 @@ function displaySingleLesson(lesson) {
 /*********
  * Add
  *********/
-function displayCourseForm(id) {
-  var btnId   = ($(this).attr('id') === 'editCourse') ? 'saveEditCourse' : 'submitCourse';
+function displayCourseForm(id, course) {
+  var edit        = $(this).attr('id') === 'editCourse';
+  var btnId       = (edit) ? 'saveEditCourse' : 'submitCourse';
+  var title       = (edit) ? course[0].title : '';
+  var instructor  = (edit) ? course[0].instructor : '';
+  var term        = (edit) ? course[0].term : '';
+  var description = (edit) ? course[0].description : '';
 
   var output  = '<form id="courseForm">';
-      output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" required></label>';
-      output +=   '<label for="instructor">Instructor (required)<input id="instructor" type="text" required></label>';
-      output +=   '<label for="term">Term<input id="term" type="text"></label>';
-      output +=   '<label for="description">Description<input id="description" type="text"></label>';
+      output +=   '<label for="courseTitle">Course Title (required)<input id="courseTitle" type="text" value="' +  title + '" required></label>';
+      output +=   '<label for="instructor">Instructor (required)<input id="instructor" type="text" value="' +  instructor + '" required></label>';
+      output +=   '<label for="term">Term<input id="term" type="text" value="' +  term + '"></label>';
+      output +=   '<label for="description">Description<input id="description" type="text" value="' +  description + '"></label>';
       output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save</button>';
       output += '</form>';
 
@@ -201,26 +207,28 @@ function addCourse() {
   });
 }
 
-function displayLessonForm(id) {
-  var btnId   = ($(this).attr('id') === 'newLesson') ? 'submitLesson' : 'saveEditLesson';
+function displayLessonForm(id, lesson) {
+    var edit         = $(this).attr('id') === 'editLesson';
+    var btnId        = (edit) ? 'saveEditLesson'    : 'submitLesson';
+    var id           = (edit) ? lesson._id          : '';
+    var title        = (edit) ? lesson.title        : '';
+    var objective    = (edit) ? lesson.objective    : '';
+    var dueDate      = (edit) ? lesson.dueDate      : '';
+    var instructions = (edit) ? lesson.instructions : '';
+    var text         = (edit) ? lesson.text         : '';
 
-  if ($(this).attr('id') === 'saveEditLesson') {
-    console.log(id);
+    var output  = '<form id="lessonForm">';
+        output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" value="' +  title + '" required></label>';
+    output +=   '<label for="objective">Objective<input id="objective" type="text" value="' + objective + '"></label>';
+    output +=   '<label for="dueDate">Due Date<input id="dueDate" type="text" value="' + dueDate + '"></label>';
+        output +=   '<label for="instructions">Instructions</label>';
+        output +=   '<textarea id="instructions">' + instructions + '</textarea>';
+        output +=   '<label for="text">Lesson Text (required)</label>';
+        output +=   '<textarea id="text" required>' + text + '</textarea>';
+        output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save Lesson</button>';
+        output += '</form>';
 
-  }
-
-  var output  = '<form id="lessonForm">';
-      output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" required></label>';
-      output +=   '<label for="objective">Objective<input id="objective" type="text"></label>';
-      output +=   '<label for="dueDate">Due Date<input id="dueDate" type="text"></label>';
-      output +=   '<label for="instructions">Instructions</label>';
-      output +=   '<textarea id="instructions"></textarea>';
-      output +=   '<label for="text">Lesson Text (required)</label>';
-      output +=   '<textarea id="text" required></textarea>';
-      output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save Lesson</button>';
-      output += '</form>';
-
-  $('#lesson').html(output);
+    $('#lesson').html(output);
 }
 
 function addLesson() {
@@ -263,11 +271,11 @@ function editCourse(id) {
   })
     .done(function() {
       getAndDisplayCourseInfo();
-  });
+    });
 }
 
 function editLesson(id) {
-  var lesson = {
+  var editedLesson = {
     title        : $('#title').val(),
     objective    : $('#objective').val(),
     dueDate      : $('#dueDate').val(),
@@ -277,13 +285,13 @@ function editLesson(id) {
 
   $.ajax('/lessons/' + id, {
     type: 'PUT',
-    data: JSON.stringify(lesson),
+    data: JSON.stringify(editedLesson),
     dataType: 'json',
     contentType: 'application/json'
   })
     .done(function() {
       getAndDisplayAllLessons();
-  });
+    });
 }
 
 
