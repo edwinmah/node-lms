@@ -159,3 +159,9 @@ html {
   vertical-align: middle;
   fill: inherit;
 }
+
+.icon:active {
+  position: relative;
+  top: .0625em;
+  left: .0625em;
+}
