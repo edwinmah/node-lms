@@ -45,7 +45,9 @@ $('#newLesson').on('click', function(event) {
 
 $('main').on('click', '#submitLesson', function(event) {
   event.preventDefault();
-  addLesson();
+  getCourseInfo().then(function(course) {
+    addLesson(course);
+  });
 });
 
 $('main').on('click', '#editLesson', function(event) {
@@ -237,8 +239,9 @@ function displayLessonForm(id, lesson) {
     $('#lesson').html(output);
 }
 
-function addLesson() {
+function addLesson(course) {
   var lesson = {
+    courseId     : course[0]._id,
     title        : $('#title').val(),
     objective    : $('#objective').val(),
     dueDate      : $('#dueDate').val(),

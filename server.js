@@ -75,6 +75,7 @@ app.post('/course', function(req, res) {
 
 app.post('/lessons', function(req, res) {
   var query = {
+      courseId     : req.body.courseId,
       title        : req.body.title,
       objective    : req.body.objective,
       dueDate      : req.body.dueDate,
