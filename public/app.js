@@ -1,3 +1,8 @@
+var ICONS = {
+  edit   : '<svg class="icon icon-pencil2"><use xlink:href="#icon-pencil2"></use></svg>',
+  delete : '<svg class="icon icon-trash-o"><use xlink:href="#icon-trash-o"></use></svg>'
+}
+
 /*********
  * Events
  *********/
@@ -114,19 +119,19 @@ function getSingleLesson(id) {
  * Display data
  **************/
 function displayCourseInfo(course) {
-    var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
-    var editCourse   = '<span id="editCourse" data-key="' + course[0]._id + '">Edit</span>';
-    var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">x</span>';
-    var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
-    var term         = '<p class="course__term">' + course[0].term + '</p>';
-    var description  = '<p class="course__description">' + course[0].description + '</p>';
+  var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
+  var editCourse   = '<span id="editCourse" data-key="' + course[0]._id + '">' + ICONS.edit + '</span>';
+  var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">' + ICONS.delete + '</span>';
+  var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
+  var term         = '<p class="course__term">' + course[0].term + '</p>';
+  var description  = '<p class="course__description">' + course[0].description + '</p>';
 
-    var output  = courseTitle;
-        output += editCourse;
-        output += deleteCourse;
-        output += instructor;
-        output += (course[0].term) ? term : '';
-        output += (course[0].description) ? description : '';
+  var output  = courseTitle;
+      output += instructor;
+      output += (course[0].term) ? term : '';
+      output += (course[0].description) ? description : '';
+      output += editCourse;
+      output += deleteCourse;
 
   $('.course-info').html(output);
 }
@@ -140,7 +145,7 @@ function displayAllLessons(lessons) {
 
     var output  = '<li class="lesson lesson--item">';
         output +=   '<a href="" class="lesson__link" data-key="' + _id + '">' + title + '</a>';
-        output +=   '<span id="deleteLesson" style="margin-left: 1em;" data-key="' + _id + '">X</span>'
+        output +=   '<span id="deleteLesson" style="margin-left: 1em;" data-key="' + _id + '">' + ICONS.delete + '</span>'
         output += '</li>';
 
     $('#lessons-list').append(output);
