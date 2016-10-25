@@ -36,8 +36,8 @@ var Lesson = require('./models/lesson');
 app.get('/course', function(req, res) {
   Course.find(function(err, course) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.json(course);
@@ -47,8 +47,8 @@ app.get('/course', function(req, res) {
 app.get('/lessons', function(req, res) {
   Lesson.find(function(err, lessons) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.json(lessons);
@@ -65,8 +65,8 @@ app.post('/course', function(req, res) {
 
   Course.create(query, function(err, course) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.status(201).json(course);
@@ -84,8 +84,8 @@ app.post('/lessons', function(req, res) {
 
   Lesson.create(query, function(err, lessons) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.status(201).json(lessons);
@@ -105,8 +105,8 @@ app.put('/course/:id', function(req, res) {
 
   Course.findOneAndUpdate(query, update, function(err, course) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.status(200).json(course);
@@ -127,8 +127,8 @@ app.put('/lessons/:id', function(req, res) {
 
   Lesson.findOneAndUpdate(query, update, function(err, lessons) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.status(200).json(lessons);
@@ -140,8 +140,8 @@ app.delete('/course/:id', function(req, res) {
 
   Course.findOneAndRemove(query, function(err, course) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.status(200).json(course);
@@ -153,8 +153,8 @@ app.delete('/lessons/:id', function(req, res) {
 
   Lesson.findOneAndRemove(query, function(err, lessons) {
     if (err) {
-      return res.status(500).json({
-        message: 'Internal Server Error'
+      return res.status(400).json({
+        message: 'Bad Request'
       });
     }
     res.status(200).json(lessons);

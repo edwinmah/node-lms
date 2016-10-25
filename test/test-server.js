@@ -374,10 +374,10 @@ describe('index page', function() {
           .post('/course')
           .send({ _id: res.body[0]._id })
           .end(function(err, res) {
-            res.should.have.status(500);
+            res.should.have.status(400);
             res.should.be.json;
             res.body.should.be.a('object');
-            res.body.message.should.equal('Internal Server Error');
+            res.body.message.should.equal('Bad Request');
             done();
           });
       });
@@ -393,10 +393,10 @@ describe('index page', function() {
           .post('/lessons')
           .send({ _id: res.body[0]._id })
           .end(function(err, res) {
-            res.should.have.status(500);
+            res.should.have.status(400);
             res.should.be.json;
             res.body.should.be.a('object');
-            res.body.message.should.equal('Internal Server Error');
+            res.body.message.should.equal('Bad Request');
             done();
           });
       });
@@ -407,10 +407,10 @@ describe('index page', function() {
       .post('/course')
       .send({})
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.message.should.equal('Internal Server Error');
+        res.body.message.should.equal('Bad Request');
         done();
       });
   });
@@ -420,10 +420,10 @@ describe('index page', function() {
       .post('/lessons')
       .send({})
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.message.should.equal('Internal Server Error');
+        res.body.message.should.equal('Bad Request');
         done();
       });
   });
@@ -454,10 +454,10 @@ describe('index page', function() {
     chai.request(app)
       .put('/course/3')
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.message.should.equal('Internal Server Error');
+        res.body.message.should.equal('Bad Request');
         done();
       });
   });
@@ -466,10 +466,10 @@ describe('index page', function() {
     chai.request(app)
       .put('/lessons/3')
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.message.should.equal('Internal Server Error');
+        res.body.message.should.equal('Bad Request');
         done();
       });
   });
@@ -478,10 +478,10 @@ describe('index page', function() {
     chai.request(app)
       .delete('/course/5')
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.message.should.equal('Internal Server Error');
+        res.body.message.should.equal('Bad Request');
         done();
       });
   });
@@ -490,10 +490,10 @@ describe('index page', function() {
     chai.request(app)
       .delete('/lessons/5')
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
-        res.body.message.should.equal('Internal Server Error');
+        res.body.message.should.equal('Bad Request');
         done();
       });
   });
