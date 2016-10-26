@@ -173,9 +173,18 @@ function displaySingleLesson(lesson) {
 }
 
 function displayRecentLesson() {
-  setTimeout(function() {
-    $('#course-lessons').find('.lesson__link').trigger('click');
-  }, 1000);
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      resolve($('#course-lessons').find('.lesson__link').trigger('click'));
+    }, 1000);
+  });
+}
+
+function autoDisplayLessonForm() {
+  var isLessonsListEmpty = $('#lessons-list').is(':empty');
+  if (isLessonsListEmpty) {
+    $('#newLesson').trigger('click');
+  }
 }
 
 
@@ -331,6 +340,7 @@ function deleteLesson(id) {
   })
     .done(function() {
       getAndDisplayAllLessons();
+      displayRecentLesson().then(autoDisplayLessonForm);
     });
 }
 
