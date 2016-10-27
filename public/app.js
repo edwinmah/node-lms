@@ -160,7 +160,7 @@ function displayAllLessons(lessons) {
 }
 
 function displaySingleLesson(lesson) {
-  var title        = '<h3 class="lesson__title">' + lesson.title + '</h3>';
+  var title        = '<h2 class="lesson__title">' + lesson.title + '</h2>';
   var objective    = '<p class="lesson__objective"><strong>Objective: </strong>' + lesson.objective + '</p>';
   var dueDate      = '<p class="lesson__due"><strong>Due: </strong>' + lesson.dueDate + '</p>';
   var instructions = '<p class="lesson__instructions"><strong>Instructions: </strong>' + lesson.instructions + '</p>';
