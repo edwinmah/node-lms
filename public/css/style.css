@@ -285,3 +285,8 @@ html {
 .actions span:not(:last-child) {
   margin-right: 1em;
 }
+
+/* SimpleMDE */
+.editor-toolbar {
+  margin-bottom: 0;
+}
