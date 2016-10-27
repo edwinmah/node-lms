@@ -105,6 +105,52 @@ button:focus {
   background-color: #0d384f;
 }
 
+/* Tables */
+table {
+  width: 100%;
+  border-radius: 4px;
+}
+
+table thead,
+table tbody,
+table tfoot {
+  border: 1px solid #f1f1f1;
+  background-color: #f8f8f8;
+}
+
+table thead {
+  background: #ddd;
+}
+
+table tfoot {
+  background: #f1f1f1;
+}
+
+table thead th,
+table thead td,
+table tfoot th,
+table tfoot td {
+  padding: .625em;
+  font-weight: bold;
+  text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #eee;
+}
+
+table tbody th,
+table tbody td {
+  padding: .625em;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 4px solid #176691;
+  padding: 1em;
+  background-color: #f1f1f1;
+}
+
 /* Links */
 a {
   transition: all 200ms linear;
