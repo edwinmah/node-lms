@@ -1,6 +1,6 @@
 var ICONS = {
-  edit   : '<svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>',
-  delete : '<svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg>'
+  edit   : '<svg class="icon icon-edit" aria-labelledby="title desc" role="img"><use xlink:href="#icon-edit"></use></svg>',
+  delete : '<svg class="icon icon-trash" aria-labelledby="title desc" role="img"><use xlink:href="#icon-trash"></use></svg>'
 }
 
 var md = new markdownit({
