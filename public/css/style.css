@@ -179,9 +179,14 @@ html {
 }
 
 /* Lesson List */
-.lesson__link {
-  display: inline-block;
+.lesson--item {
   padding: .625em 0;
+}
+
+.lesson--item:hover,
+.lesson--item:active,
+.lesson--item:focus {
+  cursor: move;
 }
 
 /* Single Lesson */

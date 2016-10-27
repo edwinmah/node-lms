@@ -8,6 +8,8 @@ var md = new markdownit({
   typographer: true
 });
 
+dragula([document.getElementById('lessons-list')]);
+
 
 /*********
  * Events
