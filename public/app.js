@@ -3,6 +3,12 @@ var ICONS = {
   delete : '<svg class="icon icon-trash-o"><use xlink:href="#icon-trash-o"></use></svg>'
 }
 
+var md = new markdownit({
+  linkify: true,
+  typographer: true
+});
+
+
 /*********
  * Events
  *********/
@@ -157,7 +163,7 @@ function displaySingleLesson(lesson) {
   var objective    = '<p class="lesson__objective"><strong>Objective: </strong>' + lesson.objective + '</p>';
   var dueDate      = '<p class="lesson__due"><strong>Due: </strong>' + lesson.dueDate + '</p>';
   var instructions = '<p class="lesson__instructions"><strong>Instructions: </strong>' + lesson.instructions + '</p>';
-  var text         = '<div class="lesson__text">' + lesson.text + '</div>';
+  var text         = '<div class="lesson__text">' + md.render(lesson.text) + '</div>';
   var editBtn      = '<button id="editLesson" type="submit" data-key="' + lesson._id + '">Edit</button>';
 
   var output  = '<article class="lesson lesson--single">';

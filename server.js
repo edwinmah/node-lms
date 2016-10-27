@@ -159,7 +159,6 @@ app.delete('/lessons/:id', function(req, res) {
       });
     }
     res.status(200).json(lessons);
-    console.log('a lesson was deleted');
   });
 });
 
