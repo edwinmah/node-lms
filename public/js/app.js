@@ -14,11 +14,6 @@ dragula([document.getElementById('lessons-list')]);
 /*********
  * Events
  *********/
-$('#login').submit(function(event) {
-  event.preventDefault();
-  console.log('login occurred');
-});
-
 $('[role="banner"]').on('click', '#newCourse', function(event) {
   event.preventDefault();
   displayCourseForm.call(this);
@@ -239,7 +234,7 @@ function addCourse() {
   })
     .done(function() {
       getAndDisplayCourseInfo();
-  });
+    });
 }
 
 function displayLessonForm(id, lesson) {
