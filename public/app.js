@@ -1,6 +1,6 @@
 var ICONS = {
-  edit   : '<svg class="icon icon-pencil2"><use xlink:href="#icon-pencil2"></use></svg>',
-  delete : '<svg class="icon icon-trash-o"><use xlink:href="#icon-trash-o"></use></svg>'
+  edit   : '<svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>',
+  delete : '<svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg>'
 }
 
 var md = new markdownit({
@@ -55,8 +55,8 @@ $('#newLesson').on('click', function(event) {
 });
 
 $('main').on('click', '#submitLesson', function(event) {
-  event.preventDefault();
-  getCourseInfo().then(function(course) {
+    event.preventDefault();
+    getCourseInfo().then(function(course) {
     addLesson(course);
   });
 });
@@ -73,7 +73,7 @@ $('main').on('click', '#saveEditLesson', function(event) {
   editLesson(key);
 });
 
-$('#course-lessons').on('click', '#deleteLesson', function(event) {
+$('#lesson').on('click', '#deleteLesson', function(event) {
   var key = '' + $(this).data('key');
   deleteLesson(key);
 });
@@ -126,8 +126,8 @@ function getSingleLesson(id) {
  **************/
 function displayCourseInfo(course) {
   var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
-  var editCourse   = '<span id="editCourse" data-key="' + course[0]._id + '">' + ICONS.edit + '</span>';
-  var deleteCourse = '<span id="deleteCourse" style="margin-left: 1em;" data-key="' + course[0]._id + '">' + ICONS.delete + '</span>';
+  var editIcon     = '<span id="editCourse" data-key="' + course[0]._id + '">' + ICONS.edit + '</span>';
+  var deleteIcon   = '<span id="deleteCourse" data-key="' + course[0]._id + '">' + ICONS.delete + '</span>';
   var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
   var term         = '<p class="course__term">' + course[0].term + '</p>';
   var description  = '<p class="course__description">' + course[0].description + '</p>';
@@ -136,8 +136,10 @@ function displayCourseInfo(course) {
       output += instructor;
       output += (course[0].term) ? term : '';
       output += (course[0].description) ? description : '';
-      output += editCourse;
-      output += deleteCourse;
+      output += '<div class="actions">';
+      output +=   editIcon;
+      output +=   deleteIcon;
+      output += '</div>';
 
   $('.course-info').html(output);
 }
@@ -151,7 +153,6 @@ function displayAllLessons(lessons) {
 
     var output  = '<li class="lesson lesson--item">';
         output +=   '<a href="" class="lesson__link" data-key="' + _id + '">' + title + '</a>';
-        output +=   '<span id="deleteLesson" style="margin-left: 1em;" data-key="' + _id + '">' + ICONS.delete + '</span>'
         output += '</li>';
 
     $('#lessons-list').append(output);
@@ -164,7 +165,8 @@ function displaySingleLesson(lesson) {
   var dueDate      = '<p class="lesson__due"><strong>Due: </strong>' + lesson.dueDate + '</p>';
   var instructions = '<p class="lesson__instructions"><strong>Instructions: </strong>' + lesson.instructions + '</p>';
   var text         = '<div class="lesson__text">' + md.render(lesson.text) + '</div>';
-  var editBtn      = '<button id="editLesson" type="submit" data-key="' + lesson._id + '">Edit</button>';
+  var editIcon     = '<span id="editLesson"   data-key="' + lesson._id + '">' + ICONS.edit   + '</span>';
+  var deleteIcon   = '<span id="deleteLesson" data-key="' + lesson._id + '">' + ICONS.delete + '</span>';
 
   var output  = '<article class="lesson lesson--single">';
       output +=   title;
@@ -172,7 +174,10 @@ function displaySingleLesson(lesson) {
       output +=   (lesson.dueDate      !== '') ? dueDate      : '';
       output +=   (lesson.instructions !== '') ? instructions : '';
       output +=   text;
-      output +=   editBtn;
+      output +=   '<div class="actions">';
+      output +=     editIcon;
+      output +=     deleteIcon;
+      output +=   '</div>';
       output += '</article>';
 
   $('#lesson').html(output);
