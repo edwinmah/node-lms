@@ -243,21 +243,23 @@ function addCourse() {
 }
 
 function displayLessonForm(id, lesson) {
-    var edit         = $(this).attr('id') === 'editLesson';
-    var btnId        = (edit) ? 'saveEditLesson'    : 'submitLesson';
-    var id           = (edit) ? lesson._id          : '';
-    var title        = (edit) ? lesson.title        : '';
-    var objective    = (edit) ? lesson.objective    : '';
-    var dueDate      = (edit) ? lesson.dueDate      : '';
-    var instructions = (edit) ? lesson.instructions : '';
-    var text         = (edit) ? lesson.text         : '';
+    var edit          = $(this).attr('id') === 'editLesson';
+    var btnId         = (edit) ? 'saveEditLesson'    : 'submitLesson';
+    var id            = (edit) ? lesson._id          : '';
+    var title         = (edit) ? lesson.title        : '';
+    var objective     = (edit) ? lesson.objective    : '';
+    var dueDate       = (edit) ? lesson.dueDate      : '';
+    var instructions  = (edit) ? lesson.instructions : '';
+    var text          = (edit) ? lesson.text         : '';
+    var markdownGuide = 'https://guides.github.com/features/mastering-markdown/';
 
     var output  = '<form id="lessonForm">';
         output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" value="' + title + '" required></label>';
-    output +=   '<label for="objective">Objective<input id="objective" type="text" value="' + objective + '"></label>';
-    output +=   '<label for="dueDate">Due Date<input id="dueDate" type="text" value="' + dueDate + '"></label>';
+        output +=   '<label for="objective">Objective<input id="objective" type="text" value="' + objective + '"></label>';
+        output +=   '<label for="dueDate">Due Date<input id="dueDate" type="text" value="' + dueDate + '"></label>';
         output +=   '<label for="instructions">Instructions</label>';
         output +=   '<textarea id="instructions">' + instructions + '</textarea>';
+        output +=   '<p><strong>Tip:</strong> Use Markdown to format your lesson text. <a href="' + markdownGuide + '">Learn more about Markdown</a>.</p>';
         output +=   '<label for="text">Lesson Text (required)</label>';
         output +=   '<textarea id="text" required>' + text + '</textarea>';
         output +=   '<button id="' + btnId + '" type="submit" data-key="' + id + '">Save Lesson</button>';
