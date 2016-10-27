@@ -260,7 +260,10 @@ function displayLessonForm(id, lesson) {
       output += '</form>';
 
   $('#lesson').html(output);
+  simpleMarkdown();
+}
 
+function simpleMarkdown() {
   setTimeout(function() {
     var simplemde = new SimpleMDE({
       element: document.getElementById("text"),
