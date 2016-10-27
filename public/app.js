@@ -136,7 +136,7 @@ function displayCourseInfo(course) {
       output += instructor;
       output += (course[0].term) ? term : '';
       output += (course[0].description) ? description : '';
-      output += '<div class="actions">';
+      output += '<div class="admin actions">';
       output +=   editIcon;
       output +=   deleteIcon;
       output += '</div>';
@@ -174,7 +174,7 @@ function displaySingleLesson(lesson) {
       output +=   (lesson.dueDate      !== '') ? dueDate      : '';
       output +=   (lesson.instructions !== '') ? instructions : '';
       output +=   text;
-      output +=   '<div class="actions">';
+      output +=   '<div class="admin actions">';
       output +=     editIcon;
       output +=     deleteIcon;
       output +=   '</div>';
