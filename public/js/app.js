@@ -270,7 +270,7 @@ function simpleMarkdown() {
       forceSync: true,
       indentWithTabs: false
     });
-  }, 500);
+  }, 0);
 }
 
 function addLesson(course) {
