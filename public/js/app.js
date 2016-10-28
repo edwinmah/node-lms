@@ -122,6 +122,13 @@ function getSingleLesson(id) {
  * Display data
  **************/
 function displayCourseInfo(course) {
+  if (course.length === 0) {
+    $('#course-lessons').hide();
+    return;
+  } else {
+    $('#course-lessons').show();
+  }
+
   var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
   var editIcon     = '<span id="editCourse" data-key="' + course[0]._id + '">' + ICONS.edit + '</span>';
   var deleteIcon   = '<span id="deleteCourse" data-key="' + course[0]._id + '">' + ICONS.delete + '</span>';
@@ -275,7 +282,7 @@ function simpleMarkdown() {
 
 function addLesson(course) {
   var lesson = {
-    courseId     : course[0]._id,
+    courseId     : (course[0]) ? course[0]._id : '',
     title        : $('#title').val(),
     objective    : $('#objective').val(),
     dueDate      : $('#dueDate').val(),
