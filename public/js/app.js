@@ -122,11 +122,11 @@ function getSingleLesson(id) {
  * Display data
  **************/
 function displayCourseInfo(course) {
-  if (course.length === 0) {
+  if (course.length > 0) {
+    $('#course-lessons').show();
+  } else {
     $('#course-lessons').hide();
     return;
-  } else {
-    $('#course-lessons').show();
   }
 
   var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
