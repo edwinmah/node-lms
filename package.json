@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "webpack --watch --minify && node server.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "markdown-it": "^8.0.1",
     "mongoose": "^4.6.4",
     "morgan": "^1.7.0",
+    "normalize.css": "^5.0.0",
     "simplemde": "^1.11.2"
   },
   "devDependencies": {
@@ -41,10 +42,12 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "css-loader": "^0.25.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "json-loader": "^0.5.4",
     "mocha": "^3.1.2",
     "node-libs-browser": "^1.0.0",
     "style-loader": "^0.13.1",
+    "uglify-js": "^2.7.4",
     "webpack": "^1.13.3"
   }
 }
