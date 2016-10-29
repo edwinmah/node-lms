@@ -1,3 +1,4 @@
+var $          = require('jquery');
 var dragula    = require('dragula');
 var MarkdownIt = require('markdown-it');
 var SimpleMDE  = require('simplemde');
@@ -155,7 +156,7 @@ function displayCourseInfo(course) {
 
 function displayAllLessons(lessons) {
   $('#lessons-list').html('');
-  for (index in lessons) {
+  for (var index in lessons) {
     var title   = lessons[index].title;
     var dueDate = lessons[index].dueDate;
     var _id     = lessons[index]._id;
