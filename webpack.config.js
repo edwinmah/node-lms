@@ -7,11 +7,30 @@ var webpack = require('webpack');
 //var filename = [packageData.name, packageData.version, 'js'];
 
 module.exports = {
-  entry: path.resolve(__dirname, '/public/js/app.js'),
+  entry: './public/js/app.js',
   output: {
-    path: path.resolve(__dirname, '/public/js'),
-    filename: 'build.js',
+    path: __dirname + '/public/js',
+    filename: 'bundle.js',
   },
   watch: true,
-  devtool: 'source-map'
+  devtool: 'source-map',
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015']
+        }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.es6']
+  }
 }
