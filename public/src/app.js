@@ -47,14 +47,17 @@ $('[role="banner"]').on('click', '#saveEditCourse', function(event) {
 $('[role="banner"]').on('click', '#deleteCourse', function(event) {
   var key = '' + $(this).data('key');
   var isLessonsEmpty    = $('#lessons-list').is(':empty');
-  var invalidDeleteMsg  = '<p class="statusMsg alert">Oops! This course still has lessons. Please delete its lessons before deleting this course.</p>';
+  var invalidDeleteMsg  = '<p class="statusMsg alert">Oops! This course still has lessons. Please delete its lessons before deleting this course.<span class="close-alert">&times;</span></p>';
 
   if (isLessonsEmpty) {
-    $('.statusMsg').remove();
     deleteCourse(key);
   } else {
     $('.course-info').append(invalidDeleteMsg);
   }
+});
+
+$('[role="banner"]').on('click', '.close-alert', function(event) {
+  $('.statusMsg').remove();
 });
 
 $('#course-lessons').on('click', '.lesson__link', function(event) {

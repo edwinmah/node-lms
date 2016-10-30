@@ -307,8 +307,20 @@ html {
 
 /* Alert */
 .alert {
+  position: relative;
   border: 1px solid #944D47;
   border-radius: 4px;
   padding: 1em;
   background-color: #F0BBB7;
+}
+
+.close-alert {
+  position: absolute;
+  top: 0;
+  right: .25em;
+  height: 1.5em;
+  width: 1.5em;
+  font-size: 1.5em;
+  text-align: right;
+  cursor: default;
 }
