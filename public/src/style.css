@@ -297,3 +297,11 @@ html {
 .editor-toolbar {
   margin-bottom: 0;
 }
+
+/* Alert */
+.alert {
+  border: 1px solid #944D47;
+  border-radius: 4px;
+  padding: 1em;
+  background-color: #F0BBB7;
+}

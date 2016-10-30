@@ -46,7 +46,15 @@ $('[role="banner"]').on('click', '#saveEditCourse', function(event) {
 
 $('[role="banner"]').on('click', '#deleteCourse', function(event) {
   var key = '' + $(this).data('key');
-  deleteCourse(key);
+  var isLessonsEmpty    = $('#lessons-list').is(':empty');
+  var invalidDeleteMsg  = '<p class="statusMsg alert">Oops! This course still has lessons. Please delete its lessons before deleting this course.</p>';
+
+  if (isLessonsEmpty) {
+    $('.statusMsg').remove();
+    deleteCourse(key);
+  } else {
+    $('.course-info').append(invalidDeleteMsg);
+  }
 });
 
 $('#course-lessons').on('click', '.lesson__link', function(event) {
@@ -200,7 +208,7 @@ function displayRecentLesson() {
   return new Promise(function(resolve, reject) {
     setTimeout(function() {
       resolve($('#course-lessons').find('.lesson__link').trigger('click'));
-    }, 1000);
+    }, 100);
   });
 }
 
