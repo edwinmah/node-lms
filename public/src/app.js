@@ -2,9 +2,9 @@ var $          = require('jquery');
 var dragula    = require('dragula');
 var MarkdownIt = require('markdown-it');
 var SimpleMDE  = require('simplemde');
-require('../../node_modules/normalize.css/normalize.css');
-require('../../node_modules/dragula/dist/dragula.min.css');
-require('../../node_modules/simplemde/dist/simplemde.min.css');
+require('normalize.css/normalize.css');
+require('dragula/dist/dragula.min.css');
+require('simplemde/dist/simplemde.min.css');
 require('../src/style.css');
 
 
