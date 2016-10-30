@@ -1,6 +1,6 @@
 var $          = require('jquery');
 var dragula    = require('dragula');
-var MarkdownIt = require('markdown-it');
+var marked     = require('marked');
 var SimpleMDE  = require('simplemde');
 require('normalize.css/normalize.css');
 require('dragula/dist/dragula.min.css');
@@ -13,9 +13,8 @@ var ICONS = {
   delete : '<svg class="icon icon-trash" aria-labelledby="title desc" role="img"><use xlink:href="#icon-trash"></use></svg>'
 };
 
-var md = new MarkdownIt({
-  linkify: true,
-  typographer: true
+marked.setOptions({
+  smartypants: true
 });
 
 dragula([document.getElementById('lessons-list')]);
@@ -178,7 +177,7 @@ function displaySingleLesson(lesson) {
   var objective    = '<p class="lesson__objective"><strong>Objective: </strong>' + lesson.objective + '</p>';
   var dueDate      = '<p class="lesson__due"><strong>Due: </strong>' + lesson.dueDate + '</p>';
   var instructions = '<p class="lesson__instructions"><strong>Instructions: </strong>' + lesson.instructions + '</p>';
-  var text         = '<div class="lesson__text">' + md.render(lesson.text) + '</div>';
+  var text         = '<div class="lesson__text">' + marked(lesson.text) + '</div>';
   var editIcon     = '<span id="editLesson"   data-key="' + lesson._id + '">' + ICONS.edit   + '</span>';
   var deleteIcon   = '<span id="deleteLesson" data-key="' + lesson._id + '">' + ICONS.delete + '</span>';
 
