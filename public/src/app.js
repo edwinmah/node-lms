@@ -169,7 +169,6 @@ function displayAllLessons(lessons) {
   $('#lessons-list').html('');
   for (var index in lessons) {
     var title   = lessons[index].title;
-    var dueDate = lessons[index].dueDate;
     var _id     = lessons[index]._id;
 
     var output  = '<li class="lesson lesson--item">';
@@ -270,7 +269,6 @@ function displayLessonForm(id, lesson) {
   var dueDate       = (edit) ? lesson.dueDate      : '';
   var instructions  = (edit) ? lesson.instructions : '';
   var text          = (edit) ? lesson.text         : '';
-  var markdownGuide = 'https://guides.github.com/features/mastering-markdown/';
 
   var output  = '<form id="lessonForm">';
       output +=   '<label for="title">Lesson Title (required)<input id="title" type="text" value="' + title + '" required></label>';
@@ -289,7 +287,7 @@ function displayLessonForm(id, lesson) {
 
 function simpleMarkdown() {
   setTimeout(function() {
-    var simplemde = new SimpleMDE({
+    new SimpleMDE({
       element: document.getElementById("text"),
       forceSync: true,
       indentWithTabs: false
