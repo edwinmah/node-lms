@@ -8,7 +8,7 @@ var plugins = [
 ];
 
 if (minify) {
-  plugins.push(new webpack.optimize.UglifyJsPlugin());
+  plugins.push(new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }));
 }
 
 module.exports = {
