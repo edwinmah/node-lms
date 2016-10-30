@@ -46,10 +46,10 @@ $('[role="banner"]').on('click', '#saveEditCourse', function(event) {
 
 $('[role="banner"]').on('click', '#deleteCourse', function(event) {
   var key = '' + $(this).data('key');
-  var isLessonsEmpty    = $('#lessons-list').is(':empty');
-  var invalidDeleteMsg  = '<p class="statusMsg alert">Oops! This course still has lessons. Please delete its lessons before deleting this course.<span class="close-alert">&times;</span></p>';
+  var isLessonsListEmpty = $('#lessons-list').is(':empty');
+  var invalidDeleteMsg   = '<p class="statusMsg alert">Oops! This course still has lessons. Please delete its lessons before deleting this course.<span class="close-alert">&times;</span></p>';
 
-  if (isLessonsEmpty) {
+  if (isLessonsListEmpty) {
     deleteCourse(key);
   } else {
     $('.course-info').append(invalidDeleteMsg);
@@ -152,7 +152,7 @@ function displayCourseInfo(course) {
   var courseTitle  = '<h1 class="course__title">' + course[0].title + '</h1>';
   var editIcon     = '<span id="editCourse" data-key="' + course[0]._id + '">' + ICONS.edit + '</span>';
   var deleteIcon   = '<span id="deleteCourse" data-key="' + course[0]._id + '">' + ICONS.delete + '</span>';
-  var instructor   = '<p class="course__instructor">' + course[0].instructor + '</p>';
+  var instructor   = '<p class="course__instructor"><strong>Instructor:</strong> ' + course[0].instructor + '</p>';
   var term         = '<p class="course__term">' + course[0].term + '</p>';
   var description  = '<p class="course__description">' + course[0].description + '</p>';
 
