@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "webpack --watch --minify && node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

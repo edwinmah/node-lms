@@ -12,7 +12,7 @@ if (minify) {
 }
 
 module.exports = {
-  entry: './public/src/app.js',
+  entry: __dirname + '/public/src/app.js',
   output: {
     path: __dirname + '/public/build',
     filename: 'bundle.js',
