@@ -12,7 +12,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress",
+    "watch": "webpack --watch -p"
   },
   "repository": {
     "type": "git",

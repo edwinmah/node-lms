@@ -2,14 +2,14 @@ var path    = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var minify  = process.argv.indexOf('--minify') != -1;
 var plugins = [
-  new ExtractTextPlugin('bundle.css', { allChunks: true })
+  new ExtractTextPlugin('bundle.css', { allChunks: true }),
+  new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  })
 ];
-
-if (minify) {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }));
-}
 
 module.exports = {
   entry: __dirname + '/public/src/app.js',
@@ -17,7 +17,6 @@ module.exports = {
     path: __dirname + '/public/build',
     filename: 'bundle.js',
   },
-  watch: true,
   devtool: 'source-map',
   module: {
     loaders: [
@@ -39,6 +38,9 @@ module.exports = {
         loader: 'json'
       }
     ]
+  },
+  externals: {
+    'fs': 'fs'
   },
   resolve: {
     extensions: ['', '.js', '.es6']

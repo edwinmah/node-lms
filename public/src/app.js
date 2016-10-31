@@ -1,17 +1,23 @@
-var $          = require('jquery');
-var dragula    = require('dragula');
-var marked     = require('marked');
-var SimpleMDE  = require('simplemde');
+var $         = require('jquery');
+var dragula   = require('dragula');
+var marked    = require('marked');
+var SimpleMDE = require('simplemde');
 require('normalize.css/normalize.css');
 require('dragula/dist/dragula.min.css');
 require('simplemde/dist/simplemde.min.css');
 require('../src/style.css');
 
+var WELCOMEMSG  = '<h2 class="welcome__title">Node Learning Management System</h2>';
+    WELCOMEMSG += '<p>This is an <abbr title="minimal viable product">MVP</abbr> for a Learning Management System (LMS) that makes it easy to create a sequence of lessons or steps for a single course or assignment. It&rsquo;s built on <a href="https://nodejs.org/en/">Node.js</a>, <a href="https://expressjs.com/">Express.js</a>, and <a href="https://www.mongodb.com/">MongoDB</a> and supports <a href="https://daringfireball.net/projects/markdown/">Markdown</a>, so that most types of content can be presented easily.</p>';
 
 var ICONS = {
   edit   : '<svg class="icon icon-edit" aria-labelledby="title desc" role="img"><use xlink:href="#icon-edit"></use></svg>',
   delete : '<svg class="icon icon-trash" aria-labelledby="title desc" role="img"><use xlink:href="#icon-trash"></use></svg>'
 };
+
+function showWelcome() {
+  $('#lesson').html(WELCOMEMSG);
+}
 
 marked.setOptions({
   smartypants: true
@@ -209,7 +215,7 @@ function displaySingleLesson(lesson) {
 function displayRecentLesson() {
   return new Promise(function(resolve, reject) {
     setTimeout(function() {
-      resolve($('#course-lessons').find('.lesson__link').trigger('click'));
+      resolve($('#course-lessons').find('.lesson__link').last().trigger('click'));
     }, 100);
   });
 }
@@ -314,9 +320,9 @@ function addLesson(course) {
     dataType: 'json',
     contentType: 'application/json'
   })
-    .done(function() {
+    .done(function(newLesson) {
       getAndDisplayAllLessons();
-      displayRecentLesson();
+      getAndDisplaySingleLesson(newLesson._id);
     });
 }
 
@@ -412,6 +418,7 @@ function getAndDisplaySingleLesson(key) {
  * Call on document ready
  *************************/
 $(function() {
+  showWelcome();
   getAndDisplayCourseInfo();
   getAndDisplayAllLessons();
 });
