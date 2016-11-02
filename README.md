@@ -30,9 +30,7 @@ Fig. 3 – Create lesson
 * Testing
 	* [Mocha](https://mochajs.org/)
 	* [Chai](http://chaijs.com/)
-* Markdown
-	* [SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor)
-	* [MarkdownIt](https://github.com/markdown-it/markdown-it)
+* [SimpleMDE Markdown Editor](https://github.com/NextStepWebs/simplemde-markdown-editor)
 * Deployment
 	* [mLab](https://mlab.com/)
 	* [Heroku](https://www.heroku.com/)
