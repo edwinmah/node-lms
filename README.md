@@ -1,5 +1,7 @@
 # Node Learning Management System
 
+![travis passing build icon](https://api.travis-ci.org/edwinmah/node-lms.svg?branch=master)
+
 This is an <abbr title="minimal viable product">MVP</abbr> for a Learning Management System (LMS) that makes it easy to create a sequence of lessons or steps for a single course or assignment. It's built on [Node.js](https://nodejs.org/en/), [Express.js](https://expressjs.com/), and [MongoDB](https://www.mongodb.com/) and supports [Markdown](https://daringfireball.net/projects/markdown/), which means that it can be used to present most types of content.
 
 It's not intended to match all of the features of LMSes such as [BlackBoard](http://www.blackboard.com/), [Desire2Learn](https://www.d2l.com/), [Moodle](https://moodle.org/), et al. So you won't find things like a gradebook, video conferencing, or [Turnitin](http://turnitin.com/) support. But sometimes having so many features available can be intimidating for some professors and instructors to use.
