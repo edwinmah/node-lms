@@ -300,6 +300,29 @@ html {
   margin-right: 1em;
 }
 
+/* Site Footer */
+.site-footer {
+  margin-top: 3em;
+}
+
+.site-footer__links {
+/*
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+*/
+  list-style-type: none;
+}
+
+/*
+.site-footer__links > li:first-child {
+  margin-right: 1em;
+}
+*/
+
 /* SimpleMDE */
 .editor-toolbar {
   margin-bottom: 0;
@@ -323,4 +346,14 @@ html {
   font-size: 1.5em;
   text-align: right;
   cursor: default;
+}
+
+/* Magnific Popup */
+.white-popup-block {
+  position: relative;
+  width: auto;
+  max-width: 38.75em;
+  margin: 1.25em auto;
+  padding: 1.25em;
+  background: #FFF;
 }
