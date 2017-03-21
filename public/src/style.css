@@ -306,20 +306,7 @@ html {
 }
 
 .site-footer__links {
-/*
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-*/
   list-style-type: none;
-}
-
-/*
-.site-footer__links > li:first-child {
-  margin-right: 1em;
 }
 */
 
@@ -354,6 +341,17 @@ html {
   width: auto;
   max-width: 38.75em;
   margin: 1.25em auto;
-  padding: 1.25em;
+  padding: 2em;
   background: #FFF;
+}
+
+/* About Modal */
+label.show-preference {
+  font-weight: normal;
+}
+
+input[class="show-preference"] {
+  display: inline-block;
+  width: auto;
+  margin-right: .5em;
 }
