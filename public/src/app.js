@@ -10,6 +10,11 @@ require('simplemde/dist/simplemde.min.css');
 require('../src/style.css');
 
 
+var ICONS = {
+  edit   : '<svg class="icon icon-edit" aria-labelledby="title desc" role="img"><use xlink:href="#icon-edit"></use></svg>',
+  delete : '<svg class="icon icon-trash" aria-labelledby="title desc" role="img"><use xlink:href="#icon-trash"></use></svg>'
+};
+
 $(function () {
   $('.popup-modal').magnificPopup({
     type: 'inline',
@@ -23,14 +28,20 @@ $(function () {
   });
 });
 
-var ICONS = {
-  edit   : '<svg class="icon icon-edit" aria-labelledby="title desc" role="img"><use xlink:href="#icon-edit"></use></svg>',
-  delete : '<svg class="icon icon-trash" aria-labelledby="title desc" role="img"><use xlink:href="#icon-trash"></use></svg>'
-};
-
 function showWelcome() {
   $('.popup-modal').triggerHandler('click');
 }
+
+$('.popup-modal-dismiss').on('click', function() {
+  var isChecked = $('#showAboutPref').prop('checked');
+  if (isChecked) {
+    localStorage.setItem('showAboutPref', 'false');
+    $('#showAboutPref').attr('checked', 'checked');
+  } else {
+    localStorage.removeItem('showAboutPref');
+    $('#showAboutPref').removeAttr('checked');
+  }
+});
 
 marked.setOptions({
   smartypants: true
@@ -431,7 +442,13 @@ function getAndDisplaySingleLesson(key) {
  * Call on document ready
  *************************/
 $(function() {
-  showWelcome();
+  if (localStorage.getItem('showAboutPref') !== 'false') {
+    showWelcome();
+    $('#showAboutPref').removeAttr('checked');
+  } else {
+    $('#showAboutPref').attr('checked', 'checked');
+  }
+
   getAndDisplayCourseInfo();
   getAndDisplayAllLessons();
 });
