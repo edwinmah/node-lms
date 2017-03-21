@@ -309,6 +309,14 @@ html {
   list-style-type: none;
 }
 
+.site-footer__links::before {
+  content: '';
+  display: block;
+  border-bottom: 2px solid #0d384f;
+  margin-bottom: 2em;
+  width: 5em;
+}
+
 /* SimpleMDE */
 .editor-toolbar {
   margin-bottom: 0;
