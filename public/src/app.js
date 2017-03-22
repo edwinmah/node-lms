@@ -35,12 +35,20 @@ $('.popup-modal-dismiss').on('click', function() {
   var isChecked = $('#showAboutPref').prop('checked');
   if (isChecked) {
     localStorage.setItem('showAboutPref', 'false');
-    $('#showAboutPref').attr('checked', 'checked');
+    checkPref();
   } else {
     localStorage.removeItem('showAboutPref');
-    $('#showAboutPref').removeAttr('checked');
+    unCheckPref();
   }
 });
+
+function checkPref() {
+  $('#showAboutPref').attr('checked', 'checked');
+}
+
+function unCheckPref() {
+  $('#showAboutPref').removeAttr('checked');
+}
 
 marked.setOptions({
   smartypants: true
@@ -443,9 +451,9 @@ function getAndDisplaySingleLesson(key) {
 $(function() {
   if (localStorage.getItem('showAboutPref') !== 'false') {
     showWelcome();
-    $('#showAboutPref').removeAttr('checked');
+    unCheckPref();
   } else {
-    $('#showAboutPref').attr('checked', 'checked');
+    checkPref();
   }
 
   getAndDisplayCourseInfo();
