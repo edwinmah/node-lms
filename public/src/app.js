@@ -21,8 +21,8 @@ $(function () {
     preloader: false,
     modal: true
   });
-  $(document).on('click', '.popup-modal-dismiss', function (e) {
-    e.preventDefault();
+  $(document).on('click', '.popup-modal-dismiss', function(event) {
+    event.preventDefault();
     $.magnificPopup.close();
   });
 });
@@ -328,7 +328,7 @@ function displayLessonForm(id, lesson) {
 function simpleMarkdown() {
   setTimeout(function() {
     new SimpleMDE({
-      element: document.getElementById("text"),
+      element: document.getElementById('text'),
       forceSync: true,
       indentWithTabs: false
     });
