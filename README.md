@@ -2,11 +2,36 @@
 
 ![travis passing build icon](https://api.travis-ci.org/edwinmah/node-lms.svg?branch=master)
 
-This is an <abbr title="minimal viable product">MVP</abbr> for a Learning Management System (LMS) that makes it easy to create a sequence of lessons or steps for a single course or assignment. It's built on [Node.js](https://nodejs.org/en/), [Express.js](https://expressjs.com/), and [MongoDB](https://www.mongodb.com/) and supports [Markdown](https://daringfireball.net/projects/markdown/), which means that it can be used to present most types of content.
+## Background
 
-It's not intended to match all of the features of LMSes such as [BlackBoard](http://www.blackboard.com/), [Desire2Learn](https://www.d2l.com/), [Moodle](https://moodle.org/), et al. So you won't find things like a gradebook, video conferencing, or [Turnitin](http://turnitin.com/) support. But sometimes having so many features available can be intimidating for some professors and instructors to use.
+My motivation for this app was to build something that would make it easy for educators to create a sequence of lessons or steps for a single course or assignment.
 
-Instead of trying to do *everything*, this Node LMS aims to do *one thing well*, and that is to make it easier to create and present your lesson content and be an effective supplement to your organization's existing LMS.
+## Use Case
+
+Educators who find traditional learning management systems like [BlackBoard](http://www.blackboard.com/), [Desire2Learn](https://www.d2l.com/), or [Moodle](https://moodle.org/) unnecessarily complicated might find this app particularly useful.
+
+This app is not intended to match all of the features of larger LMSes, so you won't find things like a gradebook, video conferencing, or [Turnitin](http://turnitin.com/) support. But sometimes having so many features available can be intimidating for some professors and instructors to use, and this app can serve as an effective supplement to an organization's exiting LMS.
+
+## Functionality
+
+* Create, edit, and delete a course
+* Create, edit, and delete course lessons
+* Write content in markdown
+
+## Technology Used
+
+This app is built on [Node.js](https://nodejs.org/en/), [Express.js](https://expressjs.com/), and [MongoDB](https://www.mongodb.com/) and supports [Markdown](https://daringfireball.net/projects/markdown/), which means that it can be used to present most types of content.
+
+### Other Software Used
+
+* [Mongoose](http://mongoosejs.com/)
+* Testing
+	* [Mocha](https://mochajs.org/)
+	* [Chai](http://chaijs.com/)
+* [SimpleMDE Markdown Editor](https://github.com/NextStepWebs/simplemde-markdown-editor)
+* Deployment
+	* [mLab](https://mlab.com/)
+	* [Heroku](https://www.heroku.com/)
 
 ## Screenshots
 
@@ -25,14 +50,3 @@ Fig. 2 – Edit lesson
 ![create lesson screen](create-lesson.png)
 
 Fig. 3 – Create lesson
-
-## Other software used
-
-* [Mongoose](http://mongoosejs.com/)
-* Testing
-	* [Mocha](https://mochajs.org/)
-	* [Chai](http://chaijs.com/)
-* [SimpleMDE Markdown Editor](https://github.com/NextStepWebs/simplemde-markdown-editor)
-* Deployment
-	* [mLab](https://mlab.com/)
-	* [Heroku](https://www.heroku.com/)
