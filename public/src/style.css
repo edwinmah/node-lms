@@ -317,6 +317,11 @@ html {
   width: 5em;
 }
 
+.site-footer__links a {
+  display: block;
+  padding: .5em 0;
+}
+
 /* SimpleMDE */
 .editor-toolbar {
   margin-bottom: 0;
